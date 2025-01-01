@@ -39,7 +39,7 @@ class LogicExpr: public Expr{
         LogicExpr operator+(Expr *b);
         const inline bool getVal() const;
     private:
-        inline LogicExpr* assert_compatible(Expr *b);
+        inline LogicExpr* assert_compatible(Expr *b) const;
         bool val;
     protected:
         const inline  string toStr() const override;
@@ -54,7 +54,7 @@ class ArithExpr: public Expr {
         const inline lli getVal() const;
         ArithExpr operator*(Expr *b) const;
     private:
-        inline ArithExpr* assert_compatible(Expr *b);
+        inline ArithExpr* assert_compatible(Expr *b) const;
         int val;
     protected:
         const inline  string toStr() const override;
@@ -70,7 +70,7 @@ ArithExpr::~ArithExpr()
 }
 
 //use CRTP to make this reusable across classes without using global functions
-inline ArithExpr* ArithExpr::assert_compatible(Expr *b){
+inline ArithExpr* ArithExpr::assert_compatible(Expr *b) const {
     if(ArithExpr *casted_b = dynamic_cast<ArithExpr *>(b)){
         return casted_b;
     }
@@ -82,14 +82,13 @@ inline ArithExpr* ArithExpr::assert_compatible(Expr *b){
 }
 
 ArithExpr ArithExpr::operator+(Expr *b) const {
-    if(const ArithExpr *casted_b = dynamic_cast<ArithExpr *>(b)){
-        return ArithExpr(getExpStr(), val + casted_b->getVal());
+    if (ArithExpr *castedB = assert_compatible(b)){
+        return ArithExpr(getExpStr(), val + castedB->getVal());
     }
-    else{
-        throw invalid_argument("Invalid argument: different types");
-        return *this;
-    }
+    return *this;
 }
+
+
 
 const string ArithExpr::toStr() const{
     return to_string(val);
@@ -106,7 +105,7 @@ LogicExpr::LogicExpr(const string &start_expStr, bool exp_val): Expr(start_expSt
 
 
 //use CRTP to make this reusable across classes without using global functions
-inline LogicExpr* LogicExpr::assert_compatible(Expr *b){
+inline LogicExpr* LogicExpr::assert_compatible(Expr *b) const{
     if(LogicExpr *casted_b = dynamic_cast<LogicExpr *>(b)){
         return casted_b;
     }
@@ -120,13 +119,10 @@ inline LogicExpr* LogicExpr::assert_compatible(Expr *b){
 //TODO: create a custom Exception object for error better syntax error handling
 //consider the use of CRTP later
 LogicExpr LogicExpr::operator+(Expr *b){
-    if (const LogicExpr *casted_b = dynamic_cast<LogicExpr *>(b)){
+    if (const LogicExpr *casted_b = assert_compatible(b)){
         return LogicExpr(getExpStr(), (val || casted_b->getVal()));
     }
-    else{
-        throw invalid_argument("Invalid argument: different types");
-        return *this;
-    }
+    return *this;
 
 }
 
