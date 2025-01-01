@@ -24,7 +24,7 @@ Expr::~Expr()
 {
 }
 
-// Overload the ostream << operator  using the friended function
+
 ostream &operator<<(ostream &os, const Expr &expr)
 {
     os << expr.toStr();
@@ -39,16 +39,86 @@ class LogicExpr: public Expr{
         LogicExpr operator+(Expr *b);
         const inline bool getVal() const;
     private:
+        inline LogicExpr* assert_compatible(Expr *b);
         bool val;
     protected:
         const inline  string toStr() const override;
 };
+
+typedef long long int lli;
+class ArithExpr: public Expr {
+    public:
+        ArithExpr(const string &start_expStr, int val);
+        virtual ~ArithExpr();
+        ArithExpr operator+(Expr *b) const;
+        const inline lli getVal() const;
+        ArithExpr operator*(Expr *b) const;
+    private:
+        inline ArithExpr* assert_compatible(Expr *b);
+        int val;
+    protected:
+        const inline  string toStr() const override;
+};
+
+ArithExpr::ArithExpr(const string &start_expStr, int exp_val): Expr(start_expStr)
+{
+    val = exp_val;
+}
+
+ArithExpr::~ArithExpr()
+{
+}
+
+//use CRTP to make this reusable across classes without using global functions
+inline ArithExpr* ArithExpr::assert_compatible(Expr *b){
+    if(ArithExpr *casted_b = dynamic_cast<ArithExpr *>(b)){
+        return casted_b;
+    }
+    else{
+        throw invalid_argument("Invalid argument: different types");
+        return nullptr;
+    }
+    
+}
+
+ArithExpr ArithExpr::operator+(Expr *b) const {
+    if(const ArithExpr *casted_b = dynamic_cast<ArithExpr *>(b)){
+        return ArithExpr(getExpStr(), val + casted_b->getVal());
+    }
+    else{
+        throw invalid_argument("Invalid argument: different types");
+        return *this;
+    }
+}
+
+const string ArithExpr::toStr() const{
+    return to_string(val);
+
+}
+const inline lli ArithExpr::getVal() const{
+    return val;
+}
 
 LogicExpr::LogicExpr(const string &start_expStr, bool exp_val): Expr(start_expStr)
 {
     val = exp_val;
 }
 
+
+//use CRTP to make this reusable across classes without using global functions
+inline LogicExpr* LogicExpr::assert_compatible(Expr *b){
+    if(LogicExpr *casted_b = dynamic_cast<LogicExpr *>(b)){
+        return casted_b;
+    }
+    else{
+        throw invalid_argument("Invalid argument: different types");
+        return nullptr;
+    }
+    
+}
+
+//TODO: create a custom Exception object for error better syntax error handling
+//consider the use of CRTP later
 LogicExpr LogicExpr::operator+(Expr *b){
     if (const LogicExpr *casted_b = dynamic_cast<LogicExpr *>(b)){
         return LogicExpr(getExpStr(), (val || casted_b->getVal()));
@@ -82,4 +152,9 @@ int main(){
     cout << la << endl;
     cout << lb << endl;
 
+    ArithExpr aa (s, 1);
+    cout << aa << endl;
+
+    cout << (aa + &aa) << endl;
+    cout << (aa + &la) << endl;
 }
