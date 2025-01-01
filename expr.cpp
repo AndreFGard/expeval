@@ -88,7 +88,12 @@ ArithExpr ArithExpr::operator+(Expr *b) const {
     return *this;
 }
 
-
+ArithExpr ArithExpr::operator*(Expr *b) const {
+    if (ArithExpr *castedB = assert_compatible(b)){
+        return ArithExpr(getExpStr(), val * castedB->getVal());
+    }
+    return *this;
+}
 
 const string ArithExpr::toStr() const{
     return to_string(val);
@@ -152,5 +157,9 @@ int main(){
     cout << aa << endl;
 
     cout << (aa + &aa) << endl;
-    cout << (aa + &la) << endl;
+    //cout << (aa + &la) << endl;
+
+
+    cout << aa * new ArithExpr(s, 55) << endl;
+    cout << aa * &lb << endl;
 }
