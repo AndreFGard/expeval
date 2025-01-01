@@ -7,10 +7,13 @@ class Expr
 {
 private:
     const string expStr;
+protected:
+    const inline  virtual string toStr() const = 0;
 public:
     Expr(const string &start_expStr);
     virtual ~Expr();
     const inline string getExpStr() const { return expStr; }
+    friend ostream &operator<<(ostream &os, const Expr &expr);
 };
 //init list as to allow const attributes
 Expr::Expr(const string &start_expStr) : expStr(start_expStr)
@@ -19,6 +22,13 @@ Expr::Expr(const string &start_expStr) : expStr(start_expStr)
 
 Expr::~Expr()
 {
+}
+
+// Overload the ostream << operator  using the friended function
+ostream &operator<<(ostream &os, const Expr &expr)
+{
+    os << expr.toStr();
+    return os;
 }
 
 
@@ -30,7 +40,8 @@ class LogicExpr: public Expr{
         const inline bool getVal() const;
     private:
         bool val;
-
+    protected:
+        const inline  string toStr() const override;
 };
 
 LogicExpr::LogicExpr(const string &start_expStr, bool exp_val): Expr(start_expStr)
@@ -49,6 +60,10 @@ LogicExpr LogicExpr::operator+(Expr *b){
 
 }
 
+const inline string LogicExpr::toStr() const {
+    return val ? "true" : "false";
+}
+
 const inline bool LogicExpr::getVal() const{
     return val;
 }
@@ -58,53 +73,13 @@ LogicExpr::~LogicExpr()
 }
 
 
-class ArithExpr: public Expr{
-    public:
-        ArithExpr(const string &start_expStr, int val);
-        virtual ~ArithExpr();
-        ArithExpr operator+(Expr *b);
-        const inline int getVal() const;
-    private:
-        int val;
-
-};
-
-ArithExpr::ArithExpr(const string &start_expStr, int exp_val): Expr(start_expStr)
-{
-    val = exp_val;
-}
-
-ArithExpr ArithExpr::operator+(Expr *b){
-    if (const ArithExpr *casted_b = dynamic_cast<ArithExpr *>(b)){
-        return ArithExpr(getExpStr(), (val + casted_b->getVal()));
-    }
-    else{
-        throw invalid_argument("Invalid argument: different types");
-        return *this;
-    }
-
-}
-
-const inline int ArithExpr::getVal() const{
-    return val;
-}
-
-ArithExpr::~ArithExpr()
-{
-}
-
-
 int main(){
 
     string s = "eae";
     LogicExpr la (s, false);
     LogicExpr lb (s, true);
-
-    ArithExpr aa(s, 10);
-    ArithExpr ab(s, 20);
-
-    cout << (la + &lb).getVal() << " is the val of la + lb\n";
-    cout << (aa + &ab).getVal() << " is the val of aa + ab\n";
-    cout << (la + &ab).getVal() << " is the val of aa + ab\n";
+    cout << (la + &lb) << endl;
+    cout << la << endl;
+    cout << lb << endl;
 
 }
