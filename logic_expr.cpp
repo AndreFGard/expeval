@@ -10,8 +10,9 @@ LogicExpr::LogicExpr(const string &start_expStr, bool exp_val): Expr(start_expSt
 }
 
 
-//use CRTP to make this reusable across classes without using global functions
+//TODO: use CRTP to make this reusable across classes without using global functions
 inline LogicExpr* LogicExpr::assert_compatible(Expr *b) const{
+    //could also use static cast and or typeid
     if(LogicExpr *casted_b = dynamic_cast<LogicExpr *>(b)){
         return casted_b;
     }

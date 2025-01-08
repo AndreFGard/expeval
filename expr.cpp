@@ -2,7 +2,6 @@
 #include "expr.h"
 using namespace std;
 
-
 //init list as to allow const attributes
 Expr::Expr(const string &start_expStr) : expStr(start_expStr)
 {
