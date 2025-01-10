@@ -2,8 +2,11 @@
 #include <stdexcept>
 using namespace std;
 
+//may throw
 LogicExp::LogicExp(string &expStr): expStr(expStr){
-    val =( expStr.find("true") != string::npos);
+    if (expStr == "true") val = true;
+    else if (expStr == "false") val = false;
+    else throw invalid_argument("Invalid argument: not a boolean value");
 }
 
 inline bool LogicExp::getVal() const{
