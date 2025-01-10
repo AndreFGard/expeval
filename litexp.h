@@ -1,3 +1,4 @@
+#pragma once
 using namespace std;
 #include <string>
 //todo: static assert to force the implementation of methods
