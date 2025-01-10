@@ -12,6 +12,7 @@ class LogicExp: public LitExp<LogicExp, bool> {
         LogicExp *is_compatible(LitExp *b) override;
     private:
         bool val;
+        const string expStr;
     
 
 };

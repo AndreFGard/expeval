@@ -2,7 +2,7 @@
 #include <stdexcept>
 using namespace std;
 
-LogicExp::LogicExp(string &expStr){
+LogicExp::LogicExp(string &expStr): expStr(expStr){
     val =( expStr.find("true") != string::npos);
 }
 
