@@ -1,17 +1,17 @@
 #pragma once
 using namespace std;
 #include <string>
-#include "expr.h"
+#include "litexp.h"
 
-class LogicExpr: public Expr{
+class LogicExp: public LitExp<LogicExp, bool> {
     public:
-        LogicExpr(const string &start_expStr, bool val);
-        virtual ~LogicExpr();
-        LogicExpr operator+(Expr *b);
-        const inline bool getVal() const;
-    private:
-        inline LogicExpr* assert_compatible(Expr *b) const;
-        bool val;
+        LogicExp (string &expStr);
+        const bool &add (LitExp *b) override;
+        inline bool getVal() const;
     protected:
-        const inline  string toStr() const override;
+        LogicExp *is_compatible(LitExp *b) override;
+    private:
+        bool val;
+    
+
 };
