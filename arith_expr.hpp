@@ -2,19 +2,16 @@
 using namespace std;
 #include <string>
 #include <stdexcept>
-#include "expr.h"
+#include "litexp.h"
 
-typedef long long int lli;
-class ArithExpr: public Expr {
+typedef long long int lli;class ArithExp: public LitExp<ArithExp, lli> {
     public:
-        ArithExpr(const string &start_expStr, int val);
-        virtual ~ArithExpr();
-        ArithExpr operator+(Expr *b) const;
-        const inline lli getVal() const;
-        ArithExpr operator*(Expr *b) const;
-    private:
-        inline ArithExpr* assert_compatible(Expr *b) const;
-        int val;
+        ArithExp(const string &expStr);
+        const lli &add(LitExp *b) override;
+        inline lli getVal() const;
     protected:
-        const inline  string toStr() const override;
+        ArithExp *is_compatible(LitExp *b) override;
+    private:
+        lli val;
+        const string expStr;
 };

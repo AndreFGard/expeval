@@ -1,47 +1,27 @@
+#include "litexp.h"
 #include "arith_expr.hpp"
-#include "expr.h"
+#include <stdexcept>
 
 using namespace std;
 
-ArithExpr::ArithExpr(const string &start_expStr, int exp_val): Expr(start_expStr)
-{
-    val = exp_val;
+//may throw
+ArithExp::ArithExp(const string &expStr): expStr(expStr){
+    val = stoll(expStr);
 }
 
-ArithExpr::~ArithExpr()
-{
-}
-
-//use CRTP to make this reusable across classes without using global functions
-inline ArithExpr* ArithExpr::assert_compatible(Expr *b) const {
-    if(ArithExpr *casted_b = dynamic_cast<ArithExpr *>(b)){
-        return casted_b;
-    }
-    else{
-        throw invalid_argument("Invalid argument: different types");
-        return nullptr;
-    }
-    
-}
-
-ArithExpr ArithExpr::operator+(Expr *b) const {
-    if (ArithExpr *castedB = assert_compatible(b)){
-        return ArithExpr(getExpStr(), val + castedB->getVal());
-    }
-    return *this;
-}
-
-ArithExpr ArithExpr::operator*(Expr *b) const {
-    if (ArithExpr *castedB = assert_compatible(b)){
-        return ArithExpr(getExpStr(), val * castedB->getVal());
-    }
-    return *this;
-}
-
-const string ArithExpr::toStr() const{
-    return to_string(val);
-
-}
-const inline lli ArithExpr::getVal() const{
+inline lli ArithExp::getVal() const{
     return val;
+}
+
+ArithExp *ArithExp::is_compatible(LitExp *b){
+    return dynamic_cast<ArithExp *>(b);
+}
+
+const lli &ArithExp::add(LitExp *b) {
+    if (const ArithExp *castedb = is_compatible(b)){
+        val = val + castedb->getVal();
+        return val;
+    }
+    else throw invalid_argument("Invalid argument: different types");
+
 }
