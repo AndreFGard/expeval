@@ -1,9 +1,10 @@
 #include "logic_expr.hpp"
 #include <stdexcept>
+#include <string>
 using namespace std;
 
 //may throw
-LogicExp::LogicExp(string &expStr): expStr(expStr){
+LogicExp::LogicExp(string expStr): expStr(expStr){
     if (expStr == "true") val = true;
     else if (expStr == "false") val = false;
     else throw invalid_argument("Invalid argument: not a boolean value");
@@ -28,5 +29,6 @@ const bool &LogicExp::add (LitExp *b) {
 
 
 int main(){
-
+ LogicExp a("tru");
+ LogicExp b("false");
 }

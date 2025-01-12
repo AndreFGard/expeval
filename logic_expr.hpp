@@ -5,7 +5,7 @@ using namespace std;
 
 class LogicExp: public LitExp<LogicExp, bool> {
     public:
-        LogicExp (string &expStr);
+        LogicExp (string expStr);
         const bool &add (LitExp *b) override;
         inline bool getVal() const;
     protected:
