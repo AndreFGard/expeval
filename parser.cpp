@@ -4,6 +4,44 @@
 #include <variant>
 using namespace std;
 
+enum class OperatorType {
+    Add,
+    Subtract,
+    Multiply,
+    Divide,
+    And,
+    Or,
+    Not
+};
+
+class Operator {
+    private:
+        OperatorType type;
+    public:
+        Operator(string_view op){
+            if (op == "+"){
+                type = OperatorType::Add;
+            } else if (op == "-"){
+                type = OperatorType::Subtract;
+            } else if (op == "*"){
+                type = OperatorType::Multiply;
+            } else if (op == "/"){
+                type = OperatorType::Divide;
+            } else if (op == "&&"){
+                type = OperatorType::And;
+            } else if (op == "||"){
+                type = OperatorType::Or;
+            } else if (op == "!"){
+                type = OperatorType::Not;
+            } else {
+                throw invalid_argument("Invalid operator");
+            }
+        }
+};
+
+
+
+
 class ExpressionString: public string{
     public:
         ExpressionString(string_view str): string(str){
@@ -18,22 +56,13 @@ class ExpressionString: public string{
         }
        //todo use operator as an enum or sum 
         Operator parseOperator(){
-            if ()
+            return Operator(view.substr(0, 2));
         }
+        
     private:
         string_view view;
         int index =0;
-
-class Operator{
-    public:
-    //todo add errors
-        Operator(string_view op): op(op){
-            if (op)
-        }
-    private:
-        string_view op;
-}
-
+};
 
 class Parser{
     public:
