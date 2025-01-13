@@ -1,12 +1,4 @@
-enum class OperatorType {
-    Add,
-    Subtract,
-    Multiply,
-    Divide,
-    And,
-    Or,
-    Not
-};
+#include "operator.hpp"
 #include <stdexcept>
 using namespace std;
 

@@ -1,4 +1,15 @@
+#pragma once
+using namespace std;
 
+enum class OperatorType {
+    Add,
+    Subtract,
+    Multiply,
+    Divide,
+    And,
+    Or,
+    Not
+};
 class Operator {
     private:
         OperatorType type;
