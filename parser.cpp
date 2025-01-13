@@ -1,62 +1,11 @@
 #include "litexp.h"
 #include "logic_expr.hpp"
 #include "arith_expr.hpp"
+#include "operator.hpp"
 #include <variant>
+
 using namespace std;
-
-enum class OperatorType {
-    Add,
-    Subtract,
-    Multiply,
-    Divide,
-    And,
-    Or,
-    Not
-};
-
-class Operator {
-    private:
-        OperatorType type;
-        int size;
-    public:
-        Operator(string_view op){
-            if (op == "+"){
-                type = OperatorType::Add;
-                size = 1;
-            } else if (op == "-"){
-                type = OperatorType::Subtract;
-                size =1;
-            } else if (op == "*"){
-                type = OperatorType::Multiply;
-                size =1;
-            } else if (op == "/"){
-                type = OperatorType::Divide;
-                size =1;
-            } else if (op == "&&"){
-                type = OperatorType::And;
-                size =2;
-            } else if (op == "||"){
-                type = OperatorType::Or;
-                size = 2;
-            } else if (op == "!"){
-                size = 1;
-                type = OperatorType::Not;
-            } else {
-                throw invalid_argument("Invalid operator");
-            }
-        }
-       inline OperatorType getType(){
-            return type;
-        }
-        //returns the size of the string of the operator
-        inline int getSize(){
-            return size;
-        }
-};
-
-
-
-
+//todo fix expressionstring as it shouldnt inherit string
 class ExpressionString: public string{
     public:
         ExpressionString(string_view str): string(str){
@@ -66,13 +15,14 @@ class ExpressionString: public string{
             return *this;
         }
         
-        bool startsWith(string prefix){
+        inline bool startsWith(string prefix){
             return (view.rfind(prefix,0) == 0);
         }
        //todo use operator as an enum or sum 
         Operator parseOperator(){
-            return Operator(view.substr(0, 2));
-            moveView(2);
+            auto temp = Operator(view.substr(0, 2));
+            moveView(temp.getSize());
+            return temp;
         }
 
     private:
@@ -85,35 +35,48 @@ class ExpressionString: public string{
 
 class Parser{
     public:
-        Parser()
+        Parser() : expStr("")
         {
-
         }
-
 
     private:
         int currentToken = 0;
-        string_view curview;
 
-        bool starts_with(string prefix){
-            return( curview.rfind(prefix,0) == 0);
-        }
+        ExpressionString expStr;
 
         void parse(string expStr){
+            expStr = ExpressionString(expStr);
             variant<ArithExp, LogicExp> parse_val(parse_or_exp(expStr));            
         }
 
-        variant<ArithExp, LogicExp> parse_or_exp(string expStr){
-            variant<ArithExp, LogicExp> 
-                val(parse_and_exp(expStr));
+        variant<ArithExp, LogicExp> parse_or_exp(string &str){
+            variant<ArithExp, LogicExp> val(parse_and_exp(str));
 
-            if (starts_with(string("||"))){
-                
+            if (expStr.startsWith("||")){
+                Operator op = expStr.parseOperator();
+                if (op.getType() != OperatorType::Or) 
+                    throw runtime_error("Operator parsing not working");
+                variant<ArithExp, LogicExp> val2(parse_and_exp(str));
+
+                //todo  deal with errors
+                variant<ArithExp, LogicExp> temp = get<LogicExp>(val).apply_operator(op, &get<LogicExp>(val2));
+                return temp;
             }
-
-            return val;
-            
-
+            else return val;            
         }
+
+        variant<ArithExp, LogicExp> parse_and_exp(string &str){
+            variant<ArithExp, LogicExp> val(parse_eq_exp(str));
+
+            if (expStr.startsWith("&&")){
+                Operator op = expStr.parseOperator();
+                variant<ArithExp, LogicExp> val2(parse_eq_exp(str));
+                variant<ArithExp, LogicExp> temp = get<LogicExp>(val).apply_operator(op, &get<LogicExp>(val2));
+                return temp;
+            }
+            return val;
+        }
+
+        varia
 
 };
