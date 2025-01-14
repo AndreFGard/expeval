@@ -17,7 +17,7 @@ Derive LitExp<Derive, val_type>::apply_operator(Operator op, LitExp<Derive, val_
         //Add, Subtract, Multiply, Divide, And, Or, NotEqual, Equal, LessEqual, GreaterEqual, Less, Greater
         switch (opType) {
             case OperatorType::Or:
-                return thisCast->add(b2);
+                return thisCast->or(b2);
             case OperatorType::And:
                 return thisCast->mul(b2);
             case OperatorType::Multiply:

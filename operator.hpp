@@ -9,10 +9,15 @@ enum class OperatorType {
     Divide,
     And,
     Or,
-    Not
+    NotEqual,
+    Equal,
+    LessEqual,
+    GreaterEqual,
+    Less,
+    Greater
 };
 //todo finish properly inlining methods
-class Operator {
+class Operator: public string{
     private:
         OperatorType type;
         int size;

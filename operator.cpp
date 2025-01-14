@@ -6,7 +6,7 @@ using namespace std;
 
 
 
-Operator::Operator(string_view op){
+Operator::Operator(string_view op): string(op){
     arity = 2;
     if (op == "+"){
         type = OperatorType::Add;
@@ -27,9 +27,24 @@ Operator::Operator(string_view op){
     } else if (op == "||"){
         type = OperatorType::Or;
         size = 2;
-    } else if (op == "!"){
+    } else if (op == "!="){
+        size = 2;
+        type = OperatorType::NotEqual;
+    } else if (op == "=="){
+        size=2;
+        type = OperatorType::Equal;
+    } else if (op == "<="){
+        size = 2;
+        type = OperatorType::LessEqual;
+    } else if (op == ">="){
+        size = 2;
+        type = OperatorType::GreaterEqual;
+    } else if (op == "<"){
         size = 1;
-        type = OperatorType::Not;
+        type = OperatorType::Less;
+    } else if (op == ">"){
+        size = 1;
+        type = OperatorType::Greater;
     } else {
         throw invalid_argument("Invalid operator: " +string(op));
     }
