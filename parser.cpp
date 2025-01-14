@@ -26,9 +26,15 @@ class ExpressionString: public string{
             return temp;
         }
 
+        inline void remove_parenthesis(){
+            view = view.substr(1, view.size()-2);
+            index++;
+        }
+
     private:
         inline void moveView(int n){
             view = view.substr(2);
+            index+=n;
         }
         string_view view;
         int index =0;
