@@ -130,7 +130,7 @@ class Parser{
         variant<ArithExp, LogicExp> parse_rel_exp(string &str){
             variant<ArithExp, LogicExp> val(parse_add_exp(str));
 
-            const vector<const string> opStrs = {
+            vector<string> opStrs = {
                 "<",">","<=",">="
             };
 
@@ -146,7 +146,7 @@ class Parser{
 
         variant<ArithExp, LogicExp> parse_add_exp(string &str){
             variant<ArithExp, LogicExp> val(parse_mul_exp(str));
-            const vector<const string> opStrs = {"-", "+"};
+            vector<string> opStrs = {"-", "+"};
             for (auto &opStr: opStrs){
                 if (!expStr.startsWith(opStr)) continue;
                 Operator op = expStr.parseOperator();
@@ -158,7 +158,7 @@ class Parser{
 
         variant<ArithExp, LogicExp> parse_mul_exp(string &str){
             variant<ArithExp, LogicExp> val(parse_unary_exp(str));
-            const vector<const string> opStrs = {"*", "/"};
+            vector< string> opStrs = {"*", "/"};
             for (auto &opStr: opStrs){
                 if (!expStr.startsWith(opStr)) continue;
                 Operator op = expStr.parseOperator();
