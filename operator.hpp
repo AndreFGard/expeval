@@ -1,5 +1,6 @@
 #pragma once
 using namespace std;
+#include <string>
 
 enum class OperatorType {
     Add,
@@ -10,6 +11,7 @@ enum class OperatorType {
     Or,
     Not
 };
+//todo finish properly inlining methods
 class Operator {
     private:
         OperatorType type;
@@ -17,7 +19,7 @@ class Operator {
         int arity;
     public:
         Operator(string_view op);
-        inline OperatorType getType();
+        inline OperatorType getType() {return type;};
         //returns the size of the string of the operator
-        inline int getSize();
-};
+        inline int getSize() const { return size; }
+    };

@@ -2,13 +2,9 @@
 #include <stdexcept>
 using namespace std;
 
-inline int Operator::getSize(){
-    return size;
-}
 
-inline OperatorType Operator::getType(){
-    return type;
-}
+
+
 
 Operator::Operator(string_view op){
     arity = 2;
