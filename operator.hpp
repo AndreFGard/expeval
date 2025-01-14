@@ -14,6 +14,7 @@ class Operator {
     private:
         OperatorType type;
         int size;
+        int arity;
     public:
         Operator(string_view op);
         inline OperatorType getType();

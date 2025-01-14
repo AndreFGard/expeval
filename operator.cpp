@@ -11,11 +11,13 @@ inline OperatorType Operator::getType(){
 }
 
 Operator::Operator(string_view op){
+    arity = 2;
     if (op == "+"){
         type = OperatorType::Add;
         size = 1;
     } else if (op == "-"){
         type = OperatorType::Subtract;
+        arity = 1;
         size =1;
     } else if (op == "*"){
         type = OperatorType::Multiply;
@@ -33,6 +35,6 @@ Operator::Operator(string_view op){
         size = 1;
         type = OperatorType::Not;
     } else {
-        throw invalid_argument("Invalid operator");
+        throw invalid_argument("Invalid operator: " +string(op));
     }
 }
