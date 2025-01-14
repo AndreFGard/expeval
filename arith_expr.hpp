@@ -7,7 +7,7 @@ using namespace std;
 typedef long long int lli;class ArithExp: public LitExp<ArithExp, lli> {
     public:
         ArithExp(const string &expStr);
-        const lli &add(LitExp *b) override;
+        lli add(LitExp *b) override;
         inline lli getVal() const;
     protected:
         ArithExp *is_compatible(LitExp *b) override;

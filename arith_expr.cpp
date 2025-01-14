@@ -17,7 +17,7 @@ ArithExp *ArithExp::is_compatible(LitExp *b){
     return dynamic_cast<ArithExp *>(b);
 }
 
-const lli &ArithExp::add(LitExp *b) {
+lli ArithExp::add(LitExp *b) {
     if (const ArithExp *castedb = is_compatible(b)){
         val = val + castedb->getVal();
         return val;

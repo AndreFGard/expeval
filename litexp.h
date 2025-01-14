@@ -17,7 +17,7 @@ class LitExp
         //     const inline  virtual string toStr() const = 0;
     public:
         virtual inline val_type getVal() const = 0;
-        virtual const val_type &add(LitExp *b) = 0;
+        virtual val_type add(LitExp *b) = 0;
         //apply binary operator
         Derive apply_operator(Operator op, LitExp *b);
 
