@@ -9,13 +9,11 @@ ArithExp::ArithExp(const string &expStr): expStr(expStr){
     val = stoll(expStr);
 }
 
-inline lli ArithExp::getVal() const{
-    return val;
-}
 
 ArithExp *ArithExp::is_compatible(LitExp *b){
     return dynamic_cast<ArithExp *>(b);
 }
+
 
 lli ArithExp::add(LitExp *b) {
     if (const ArithExp *castedb = is_compatible(b)){
@@ -25,3 +23,53 @@ lli ArithExp::add(LitExp *b) {
     else throw invalid_argument("Invalid argument: different types");
 
 }
+
+lli ArithExp::sub(LitExp *b) {
+    if (const ArithExp *castedb = is_compatible(b)){
+        val = val - castedb->getVal();
+        return val;
+    }
+    else throw invalid_argument("Invalid argument: different types");
+
+}
+
+lli ArithExp::mul(LitExp *b){
+    if (const ArithExp * castedb = is_compatible(b)){
+        val = val * castedb->getVal();
+        return val;
+    }
+    else throw invalid_argument("Invalid argument: different types");
+    }
+
+lli ArithExp::div(LitExp *b){
+    if (const ArithExp * castedb = is_compatible(b)){
+        val = val / castedb->getVal();
+        return val;
+    }
+    else throw invalid_argument("Invalid argument: different types");
+}
+
+bool ArithExp::equal(LitExp *b){
+    if (const ArithExp * castedb = is_compatible(b)){
+        val = (val == castedb->getVal());
+        return val;
+    }
+    else throw invalid_argument("Invalid argument: different types");
+}
+
+bool ArithExp::less(LitExp *b){
+    if (const ArithExp * castedb = is_compatible(b)){
+        val = (val < castedb->getVal());
+        return val;
+    }
+    else throw invalid_argument("Invalid argument: different types");
+}
+
+bool ArithExp::greater(LitExp *b){
+    if (const ArithExp * castedb = is_compatible(b)){
+        val = (val > castedb->getVal());
+        return val;
+    }
+    else throw invalid_argument("Invalid argument: different types");
+}
+

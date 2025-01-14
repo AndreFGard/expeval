@@ -3,9 +3,6 @@
 using namespace std;
 
 
-
-
-
 Operator::Operator(string_view op): string(op){
     arity = 2;
     if (op == "+"){
