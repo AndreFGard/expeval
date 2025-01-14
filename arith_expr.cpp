@@ -51,24 +51,21 @@ lli ArithExp::div(LitExp *b){
 
 bool ArithExp::equal(LitExp *b){
     if (const ArithExp * castedb = is_compatible(b)){
-        val = (val == castedb->getVal());
-        return val;
+        return (val == castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
 }
 
 bool ArithExp::less(LitExp *b){
     if (const ArithExp * castedb = is_compatible(b)){
-        val = (val < castedb->getVal());
-        return val;
+        return (val < castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
 }
 
 bool ArithExp::greater(LitExp *b){
     if (const ArithExp * castedb = is_compatible(b)){
-        val = (val > castedb->getVal());
-        return val;
+        return (val > castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
 }

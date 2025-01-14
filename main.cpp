@@ -1,25 +1,52 @@
-
-
-#include <iostream>
-#include "expr.h" 
-#include "logic_expr.hpp"
 #include "arith_expr.hpp"
+#include "logic_expr.hpp"
+#include "parser.cpp"
+#include "litexp.h"
+#include <functional>
+#include <stdexcept>
+#include <iostream>
+using namespace std;
+inline bool assert(bool x){
+    if (!x) throw runtime_error("assertion failed");
+    return true;
+}
+
+
+
 int main(){
+    LogicExp b("false");
+    LogicExp a("true");
 
-    string s = "eae";
-    LogicExpr la (s, false);
-    LogicExpr lb (s, true);
-    cout << (la + &lb) << endl;
-    cout << la << endl;
-    cout << lb << endl;
+    assert(a.not_equal(&b));
+    assert(a.equal(&a));
+    assert(a.or_op(&b));
+    assert(a.and_op(&a));
 
-    ArithExpr aa (s, 1);
-    cout << aa << endl;
+    try {
+        b.add(&b);
+    }
+    catch(runtime_error &e){
+        assert(true);
+    }
+    assert(!b.getVal());
+    b.or_op(&b);
+    assert(!b.getVal());
+    assert(a.getVal());
+    b.or_op(&a);
+    assert(b.getVal());
 
-    cout << (aa + &aa) << endl;
-    //cout << (aa + &la) << endl;
+    ArithExp c("3");
+    ArithExp d("4");
+    ArithExp e("7");
+    assert(c.less(&d));
+    assert(c.less_equal(&d));
+    assert(d.greater(&c));
+    c.add(&d);
+    assert(c.less_equal(&e));
+    assert(!c.less_equal(&e));
+    
+    
 
-
-    cout << aa * new ArithExpr(s, 55) << endl;
-    cout << aa * &lb << endl;
+    
+    
 }
