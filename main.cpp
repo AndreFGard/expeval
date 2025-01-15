@@ -11,7 +11,11 @@ inline bool assert(bool x){
     return true;
 }
 
-
+inline bool parseAndPrint(string str){
+    Parser x(str);
+    cout << x.toStr() << endl;
+    return true;
+}
 
 int main(){
     LogicExp b("false");
@@ -45,7 +49,12 @@ int main(){
     assert(c.less_equal(&e));
     
     
-    Parser x("true");
+    //parseAndPrint("true");
+    // parseAndPrint("false || true");
+    // parseAndPrint("false || (true && true)");
+    // parseAndPrint("false || (true && false)");
+    // parseAndPrint("1");
+    parseAndPrint("1 * 5");
     
     
     
