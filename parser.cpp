@@ -215,12 +215,12 @@ class Parser{
 
 
         LogicOrArith *parse_lit(string &str){
-            auto lit = expStr.parseLit();
+            variant<bool,lli> lit = expStr.parseLit();
             if (bool *b = get_if<bool>(&lit)){
                 return new LogicExp((*b) ? "true" : "false");
             }
             else if (lli *i = get_if<lli>(&lit)){
-                return new ArithExp(to_string(*b));
+                return new ArithExp(to_string(*i));
             }
             else throw runtime_error("Invalid literal");
         }

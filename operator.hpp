@@ -1,6 +1,7 @@
 #pragma once
 using namespace std;
 #include <string>
+#include <unordered_map>
 
 enum class OperatorType {
     Add,
@@ -16,9 +17,12 @@ enum class OperatorType {
     Less,
     Greater
 };
-//todo finish properly inlining methods
+
+
+
 class Operator: public string{
     private:
+        //todo move startswith to a deriver from string
         OperatorType type;
         int size;
         int arity;

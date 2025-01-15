@@ -2,47 +2,34 @@
 #include <stdexcept>
 using namespace std;
 
+//todo move this to inside Operator
+static const unordered_map<string, OperatorType> stringToOp {
+        { "+", OperatorType::Add },
+        { "-", OperatorType::Subtract },
+        { "*", OperatorType::Multiply },
+        { "/", OperatorType::Divide },
+        { "&&", OperatorType::And },
+        { "||", OperatorType::Or },
+        { "!=", OperatorType::NotEqual },
+        { "==", OperatorType::Equal },
+        { "<=", OperatorType::LessEqual },
+        { ">=", OperatorType::GreaterEqual },
+        { "<", OperatorType::Less },
+        { ">", OperatorType::Greater }
+};
+
 
 Operator::Operator(string_view op): string(op){
     arity = 2;
-    if (op == "+"){
-        type = OperatorType::Add;
-        size = 1;
-    } else if (op == "-"){
-        type = OperatorType::Subtract;
-        arity = 1;
-        size =1;
-    } else if (op == "*"){
-        type = OperatorType::Multiply;
-        size =1;
-    } else if (op == "/"){
-        type = OperatorType::Divide;
-        size =1;
-    } else if (op == "&&"){
-        type = OperatorType::And;
-        size =2;
-    } else if (op == "||"){
-        type = OperatorType::Or;
-        size = 2;
-    } else if (op == "!="){
-        size = 2;
-        type = OperatorType::NotEqual;
-    } else if (op == "=="){
-        size=2;
-        type = OperatorType::Equal;
-    } else if (op == "<="){
-        size = 2;
-        type = OperatorType::LessEqual;
-    } else if (op == ">="){
-        size = 2;
-        type = OperatorType::GreaterEqual;
-    } else if (op == "<"){
-        size = 1;
-        type = OperatorType::Less;
-    } else if (op == ">"){
-        size = 1;
-        type = OperatorType::Greater;
-    } else {
-        throw invalid_argument("Invalid operator: " +string(op));
+    for (auto [OpStr, OpCode]: stringToOp){
+        if (op.compare(0, OpStr.length(), OpStr)){
+            type = OpCode;
+            size = OpStr.length();
+            if (OpCode == OperatorType::Subtract) arity = 1;
+            return;
+        }
     }
+
+    throw invalid_argument("Invalid operator: " +string(op));
+    
 }
