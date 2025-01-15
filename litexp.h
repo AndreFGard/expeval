@@ -10,7 +10,7 @@ class Expression {
         Expression() = default;
     public:
         virtual void apply_operator(Operator op, Expression *b) = 0;
-        virtual ~Expression() = default; // Adding a virtual destructor to ensure proper cleanup of derived classes
+        virtual string toStr() = 0;
 };
 
 
@@ -27,6 +27,10 @@ class LitExp: public Expression
         val_type val;
         //     const inline  virtual string toStr() const = 0;
     public:
+        virtual string toStr() override {
+            return string();
+        };
+
         virtual inline val_type getVal() const = 0;
         //Add, Subtract, Multiply, Divide, And, Or, NotEqual, Equal, LessEqual, GreaterEqual, Less, Greater
         

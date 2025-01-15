@@ -5,6 +5,9 @@ using namespace std;
 
 class LogicExp: public LitExp<LogicExp, bool> {
     public:
+        string toStr() override {
+            return (val) ? "true" : "false";
+        }
         LogicExp (string expStr);
         bool or_op(LitExp *b) override;
         bool and_op(LitExp *b) override;
