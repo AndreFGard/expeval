@@ -40,9 +40,29 @@ class ExpressionString{
             return view;
         }
 
+        variant<bool, lli> parseLit(){
+            if (startsWith("true")){
+                moveView(4);
+                return true;
+            }
+            else if (startsWith("false")){
+                moveView(5);
+                return false;
+            }
+            else {
+                string numS;
+                while (isdigit(view[0])){
+                    numS += view[0];
+                    moveView(1);
+                }
+                return stoll(numS);
+
+            }
+        }
+
     private:
         inline void moveView(int n){
-            view = view.substr(2);
+            view = view.substr(n);
             index+=n;
             stripView();
         }
@@ -69,6 +89,10 @@ class Parser{
             parse(originalExpStr);
         }
         Expression *valExpr;
+
+        string toStr(){
+            return valExpr->toStr();
+        }
 
     private:
         int currentToken = 0;
@@ -191,16 +215,14 @@ class Parser{
 
 
         LogicOrArith *parse_lit(string &str){
-            //todo figure how to tell if something is an int or a string
-            string cur_str = string(expStr.getView());
-            try{
-                ArithExp* temp = new ArithExp(cur_str);
-                return temp;
-            } catch (invalid_argument &_){
-                LogicExp* temp= new LogicExp(cur_str);
-                return temp;
+            auto lit = expStr.parseLit();
+            if (bool *b = get_if<bool>(&lit)){
+                return new LogicExp((*b) ? "true" : "false");
             }
-
+            else if (lli *i = get_if<lli>(&lit)){
+                return new ArithExp(to_string(*b));
+            }
+            else throw runtime_error("Invalid literal");
         }
 
 };
