@@ -4,13 +4,23 @@ using namespace std;
 #include "operator.hpp"
 #include <stdexcept>
 
+
+class Expression {
+    protected:
+        Expression() = default;
+    public:
+        virtual void apply_operator(Operator op, Expression *b) = 0;
+        virtual ~Expression() = default; // Adding a virtual destructor to ensure proper cleanup of derived classes
+};
+
+
 //todo: static assert to force the implementation of methods
 //this is crtp like, but also creates vtables as runtime polymorphism makes the code smaller
 
 //todo perhaps use std::visit + std;:alternatives to do fancier polymorphism and use overloading instead of 
 //dynamic cast
 template <typename Derive, typename val_type>
-class LitExp
+class LitExp: public Expression
 {
     private:
         const string expStr;
@@ -47,6 +57,8 @@ class LitExp
         virtual bool greater(LitExp *b) {
             throw runtime_error("greater() not implemented");
         }
+        
+        void apply_operator(Operator op, Expression *b) override;
 
         virtual bool less_equal(LitExp *b);
         virtual bool greater_equal(LitExp *b);
@@ -55,7 +67,6 @@ class LitExp
 
         
         //apply binary operator
-        Derive apply_operator(Operator op, LitExp *b);
 
         // const inline string getExpStr() const { return expStr; }
         // friend ostream &operator<<(ostream &os, const Expr &expr);
@@ -79,3 +90,43 @@ template <typename Derive, typename val_type>
 bool LitExp<Derive, val_type>::not_equal(LitExp<Derive, val_type> *b) {
     return !equal(b);
 }
+
+template <typename Derive, typename val_type>
+void LitExp<Derive, val_type>::apply_operator(Operator op, Expression *b) {
+    OperatorType opType = op.getType();
+
+    //Hereby, I declare: this static cast shall work
+    if (Derive *b2 = is_compatible(static_cast<LitExp<Derive, val_type>*>(b))) {
+        //Derive thisCopy = *this;
+        LitExp<Derive, val_type> *thisCast = static_cast<LitExp<Derive, val_type>*>(this);
+        
+        //todo find some compile time way to enforce all union types being matched
+        //Add, Subtract, Multiply, Divide, And, Or, NotEqual, Equal, LessEqual, GreaterEqual, Less, Greater
+        switch (opType) {
+            case OperatorType::Or:
+                thisCast->or_op(b2);
+            case OperatorType::And:
+                thisCast->and_op(b2);
+            case OperatorType::Multiply:
+                thisCast->mul(b2);
+            case OperatorType::Divide:
+                thisCast->div(b2);
+            case OperatorType::Equal:
+                thisCast->equal(b2);
+            case OperatorType::NotEqual:
+                !thisCast->equal(b2);
+            case OperatorType::GreaterEqual:
+                (thisCast->equal(b2) || thisCast->greater(b2));
+            case OperatorType::LessEqual:
+                !thisCast->greater(b2);
+            case OperatorType::Greater:
+                thisCast->greater(b2);
+            case OperatorType::Less:
+                (thisCast->less(b2));
+            default:
+                throw runtime_error("Unimplemented operator: " + op);
+        }
+
+    }
+}
+

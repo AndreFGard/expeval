@@ -43,10 +43,10 @@ int main(){
     assert(d.greater(&c));
     c.add(&d);
     assert(c.less_equal(&e));
-    assert(!c.less_equal(&e));
     
     
-
+    Parser x("true");
+    
     
     
 }
