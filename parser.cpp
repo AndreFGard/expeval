@@ -68,15 +68,17 @@ class Parser{
         Parser(string originalExpStr) : expStr(originalExpStr){
             parse(originalExpStr);
         }
+        Expression *valExpr;
 
     private:
         int currentToken = 0;
 
         ExpressionString expStr;
-
+        
         void parse(string str){
             expStr = ExpressionString(str);
-            LogicOrArith *parse_val(parse_or_exp(str));            
+            LogicOrArith *parse_val(parse_or_exp(str)); 
+            valExpr = parse_val;
         }
 
         LogicOrArith *parse_or_exp(string &str){
