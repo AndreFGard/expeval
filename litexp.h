@@ -108,25 +108,25 @@ void LitExp<Derive, val_type>::apply_operator(Operator op, Expression *b) {
         //Add, Subtract, Multiply, Divide, And, Or, NotEqual, Equal, LessEqual, GreaterEqual, Less, Greater
         switch (opType) {
             case OperatorType::Or:
-                thisCast->or_op(b2);
+                thisCast->or_op(b2); return;
             case OperatorType::And:
-                thisCast->and_op(b2);
+                thisCast->and_op(b2); return;
             case OperatorType::Multiply:
-                thisCast->mul(b2);
+                thisCast->mul(b2); return;
             case OperatorType::Divide:
-                thisCast->div(b2);
+                thisCast->div(b2); return;
             case OperatorType::Equal:
-                thisCast->equal(b2);
+                thisCast->equal(b2); return;
             case OperatorType::NotEqual:
-                !thisCast->equal(b2);
+                !thisCast->equal(b2); return;
             case OperatorType::GreaterEqual:
                 (thisCast->equal(b2) || thisCast->greater(b2));
             case OperatorType::LessEqual:
-                !thisCast->greater(b2);
+                !thisCast->greater(b2); return;
             case OperatorType::Greater:
-                thisCast->greater(b2);
+                thisCast->greater(b2); return;
             case OperatorType::Less:
-                (thisCast->less(b2));
+                (thisCast->less(b2)); return;
             default:
                 throw runtime_error("Unimplemented operator: " + op);
         }
