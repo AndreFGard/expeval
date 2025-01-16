@@ -10,7 +10,7 @@ ArithExp::ArithExp(const string &expStr): expStr(expStr){
 }
 
 
-ArithExp *ArithExp::is_compatible(LitExp *b){
+ArithExp *ArithExp::is_compatible(Expression *b){
     return dynamic_cast<ArithExp *>(b);
 }
 

@@ -19,7 +19,7 @@ class LogicExp: public LitExp<LogicExp, bool> {
             val = !val;
         }
     protected:
-        LogicExp *is_compatible(LitExp *b) override;
+        LogicExp *is_compatible(Expression *b) override;
     private:
         bool val;
         const string expStr;

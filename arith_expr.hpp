@@ -5,7 +5,8 @@ using namespace std;
 #include "litexp.h"
 #include <string>
 
-typedef long long int lli;class ArithExp: public LitExp<ArithExp, lli> {
+typedef long long int lli;
+class ArithExp: public LitExp<ArithExp, lli> {
     public:
         ArithExp(const string &expStr);
         inline lli getVal() const {
@@ -27,7 +28,7 @@ typedef long long int lli;class ArithExp: public LitExp<ArithExp, lli> {
         bool greater(LitExp *b) override;
 
     protected:
-        ArithExp *is_compatible(LitExp *b) override;
+        ArithExp *is_compatible(Expression *b) override;
     private:
         lli val;
         const string expStr;
