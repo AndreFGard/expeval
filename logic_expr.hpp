@@ -15,6 +15,9 @@ class LogicExp: public LitExp<LogicExp, bool> {
         inline bool getVal() const {
             return val;
         };
+        inline void invert(){
+            val = !val;
+        }
     protected:
         LogicExp *is_compatible(LitExp *b) override;
     private:

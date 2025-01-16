@@ -8,9 +8,12 @@ using namespace std;
 class Expression {
     protected:
         Expression() = default;
+        bool invert_val = false;
     public:
         virtual void apply_operator(Operator op, Expression *b) = 0;
         virtual string toStr() = 0;
+        void invert(){ invert_val = !invert_val;}
+
 };
 
 
@@ -127,6 +130,8 @@ void LitExp<Derive, val_type>::apply_operator(Operator op, Expression *b) {
                 thisCast->greater(b2); return;
             case OperatorType::Less:
                 (thisCast->less(b2)); return;
+            case OperatorType::Subtract:
+                (thisCast->sub(b2)); return;
             default:
                 throw runtime_error("Unimplemented operator: " + op);
         }

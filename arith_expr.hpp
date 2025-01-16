@@ -11,7 +11,9 @@ typedef long long int lli;class ArithExp: public LitExp<ArithExp, lli> {
         inline lli getVal() const {
             return val;
         }
-        
+        inline void invert(){
+            val = -val;
+        }
         string toStr() override {
             return to_string(val);
         }
