@@ -78,7 +78,7 @@ class LitExp: public Expression
         // const inline string getExpStr() const { return expStr; }
         // friend ostream &operator<<(ostream &os, const Expr &expr);
     protected:
-        virtual Derive* is_compatible(LitExp *b) = 0;
+        virtual Derive* is_compatible(Expression *b) = 0;
         LitExp() = default; //prohibiting creation of Litexps, as shown in the documentation
 };
 
@@ -103,7 +103,7 @@ void LitExp<Derive, val_type>::apply_operator(Operator op, Expression *b) {
     OperatorType opType = op.getType();
 
     //Hereby, I declare: this static cast shall work
-    if (Derive *b2 = is_compatible(static_cast<LitExp<Derive, val_type>*>(b))) {
+    if (Derive *b2 = is_compatible((b))) {
         //Derive thisCopy = *this;
         LitExp<Derive, val_type> *thisCast = static_cast<LitExp<Derive, val_type>*>(this);
 
