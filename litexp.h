@@ -103,41 +103,41 @@ void LitExp<Derive, val_type>::apply_operator(Operator op, Expression *b) {
     OperatorType opType = op.getType();
 
     //Hereby, I declare: this static cast shall work
-    if (Derive *b2 = is_compatible((b))) {
-        //Derive thisCopy = *this;
-        LitExp<Derive, val_type> *thisCast = static_cast<LitExp<Derive, val_type>*>(this);
+    //or not, then either the unimplemented operator or the implemented operator upon it's time to check
+    //shal throw
+    auto *b2 = static_cast<Derive *>(b);
+    //Derive thisCopy = *this;
+    LitExp<Derive, val_type> *thisCast = static_cast<LitExp<Derive, val_type>*>(this);
 
-        //todo find some compile time way to enforce all union types being matched
-        //Add, Subtract, Multiply, Divide, And, Or, NotEqual, Equal, LessEqual, GreaterEqual, Less, Greater
-        switch (opType) {
-            case OperatorType::Or:
-                thisCast->or_op(b2); return;
-            case OperatorType::And:
-                thisCast->and_op(b2); return;
-            case OperatorType::Add:
-                thisCast->add(b2);return;
-            case OperatorType::Multiply:
-                thisCast->mul(b2); return;
-            case OperatorType::Divide:
-                thisCast->div(b2); return;
-            case OperatorType::Equal:
-                thisCast->equal(b2); return;
-            case OperatorType::NotEqual:
-                !thisCast->equal(b2); return;
-            case OperatorType::GreaterEqual:
-                (thisCast->equal(b2) || thisCast->greater(b2));
-            case OperatorType::LessEqual:
-                !thisCast->greater(b2); return;
-            case OperatorType::Greater:
-                thisCast->greater(b2); return;
-            case OperatorType::Less:
-                (thisCast->less(b2)); return;
-            case OperatorType::Subtract:
-                (thisCast->sub(b2)); return;
-            default:
-                throw runtime_error("Unimplemented operator: " + op);
-        }
-
+    //todo find some compile time way to enforce all union types being matched
+    //Add, Subtract, Multiply, Divide, And, Or, NotEqual, Equal, LessEqual, GreaterEqual, Less, Greater
+    switch (opType) {
+        case OperatorType::Or:
+            thisCast->or_op(b2); return;
+        case OperatorType::And:
+            thisCast->and_op(b2); return;
+        case OperatorType::Add:
+            thisCast->add(b2);return;
+        case OperatorType::Multiply:
+            thisCast->mul(b2); return;
+        case OperatorType::Divide:
+            thisCast->div(b2); return;
+        case OperatorType::Equal:
+            thisCast->equal(b2); return;
+        case OperatorType::NotEqual:
+            !thisCast->equal(b2); return;
+        case OperatorType::GreaterEqual:
+            (thisCast->equal(b2) || thisCast->greater(b2));
+        case OperatorType::LessEqual:
+            !thisCast->greater(b2); return;
+        case OperatorType::Greater:
+            thisCast->greater(b2); return;
+        case OperatorType::Less:
+            (thisCast->less(b2)); return;
+        case OperatorType::Subtract:
+            (thisCast->sub(b2)); return;
+        default:
+            throw runtime_error("Unimplemented operator: " + op);
     }
 }
 
