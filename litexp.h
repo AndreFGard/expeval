@@ -12,7 +12,7 @@ class Expression {
     public:
         virtual void apply_operator(Operator op, Expression *b) = 0;
         virtual string toStr() = 0;
-        void invert(){ invert_val = !invert_val;}
+        virtual void invert() = 0;
 
 };
 
