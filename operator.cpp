@@ -5,7 +5,7 @@ using namespace std;
 //todo move this to inside Operator
 static const unordered_map<string, OperatorType> stringToOp {
         { "+", OperatorType::Add },
-        { "-", OperatorType::Subtract },
+        { "- ", OperatorType::Subtract }, //note the whitespace
         { "*", OperatorType::Multiply },
         { "/", OperatorType::Divide },
         { "&&", OperatorType::And },
@@ -22,7 +22,7 @@ static const unordered_map<string, OperatorType> stringToOp {
 Operator::Operator(string_view op): string(op){
     arity = 2;
     for (auto [OpStr, OpCode]: stringToOp){
-        if (op.compare(0, OpStr.length(), OpStr)){
+        if (!op.compare(0, OpStr.length(), OpStr)){
             type = OpCode;
             size = OpStr.length();
             if (OpCode == OperatorType::Subtract) arity = 1;
