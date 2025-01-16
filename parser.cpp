@@ -35,11 +35,9 @@ class ExpressionString{
             for (int i=0;i<view.length();i++){
                 if (view[i] == ')') lastClosing = i;
             }
-            string temp = string(view.substr(1, lastClosing-firstOpening-1));
+            string temp = string(view).substr(1+1, lastClosing-firstOpening-1-1-1); //+1 because of spaces
             moveView(lastClosing+1);
             return temp;
-            //string temp = string(view.substr(1));
-            //temp.erase(lastClosing -1);
         }
 
         inline string_view getView(){
