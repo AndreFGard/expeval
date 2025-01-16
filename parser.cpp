@@ -53,8 +53,10 @@ class ExpressionString{
                 string numS;
                 int stIdx = 0;
                 int negative = 1;
-                if(view[0] == '-') negative = -1;
-                moveView(1);
+                if(view[0] == '-'){
+                    negative = -1;
+                    moveView(1);
+                }
 
                 while (isdigit(view[stIdx])){
                     numS += view[stIdx];
