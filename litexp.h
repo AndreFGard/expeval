@@ -106,7 +106,7 @@ void LitExp<Derive, val_type>::apply_operator(Operator op, Expression *b) {
     if (Derive *b2 = is_compatible(static_cast<LitExp<Derive, val_type>*>(b))) {
         //Derive thisCopy = *this;
         LitExp<Derive, val_type> *thisCast = static_cast<LitExp<Derive, val_type>*>(this);
-        
+
         //todo find some compile time way to enforce all union types being matched
         //Add, Subtract, Multiply, Divide, And, Or, NotEqual, Equal, LessEqual, GreaterEqual, Less, Greater
         switch (opType) {
@@ -114,6 +114,8 @@ void LitExp<Derive, val_type>::apply_operator(Operator op, Expression *b) {
                 thisCast->or_op(b2); return;
             case OperatorType::And:
                 thisCast->and_op(b2); return;
+            case OperatorType::Add:
+                thisCast->add(b2);return;
             case OperatorType::Multiply:
                 thisCast->mul(b2); return;
             case OperatorType::Divide:
