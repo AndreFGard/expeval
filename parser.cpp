@@ -51,11 +51,19 @@ class ExpressionString{
             }
             else {
                 string numS;
-                while (isdigit(view[0])){
-                    numS += view[0];
-                    moveView(1);
+                int stIdx = 0;
+                int negative = 1;
+                if(view[0] == '-') negative = -1;
+                moveView(1);
+
+                while (isdigit(view[stIdx])){
+                    numS += view[stIdx];
+                    //moveView(1);
+                    //todo perhaps i could deal with subtraction right here
+                    stIdx++;
                 }
-                return stoll(numS);
+                moveView(stIdx);
+                return negative *stoll(numS);
 
             }
         }
