@@ -183,7 +183,7 @@ class Parser{
 
         LogicOrArith *parse_add_exp(string &str){
             LogicOrArith *val = (parse_mul_exp(str));
-            vector<string> opStrs = {"-", "+"};
+            vector<string> opStrs = {"- ", "+"};
             for (auto &opStr: opStrs){
                 if (!expStr.startsWith(opStr)) continue;
                 Operator op = expStr.parseOperator();
@@ -208,19 +208,24 @@ class Parser{
         }
        
         LogicOrArith *parse_unary_exp(string &str){
-            if (expStr.startsWith("-")){
+            if (expStr.startsWith("- ")){
                 Operator op = expStr.parseOperator();
                 //todo apply the minuss operator with an unary operator function;
                 LogicOrArith *val = (parse_unary_exp(str));
+                val->invert();
                 return val;
             }
-            else if (expStr.startsWith("(")){
-                //todo figure how to deal with recursion in this case
+            LogicOrArith *val = parse_primary_exp(str);
+            return val;
+        }
+
+        LogicOrArith *parse_primary_exp(string &str){
+            if (expStr.startsWith("(")){
                 expStr.remove_parenthesis();
                 return parse_or_exp(str);
             }
-            else return parse_lit(str); 
-
+            LogicOrArith *val = parse_lit(str);
+            return val;
         }
 
 
