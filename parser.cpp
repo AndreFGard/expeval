@@ -30,10 +30,16 @@ class ExpressionString{
             return temp;
         }
 
-        inline void remove_parenthesis(){
-            view = view.substr(1, view.size()-2);
-            index++;
-            stripView();
+        string getSubExpressionString(){
+            int firstOpening = 0, lastClosing =-1;
+            for (int i=0;i<view.length();i++){
+                if (view[i] == ')') lastClosing = i;
+            }
+            string temp = string(view.substr(1, lastClosing-firstOpening-1));
+            moveView(lastClosing+1);
+            return temp;
+            //string temp = string(view.substr(1));
+            //temp.erase(lastClosing -1);
         }
 
         inline string_view getView(){
@@ -221,8 +227,10 @@ class Parser{
 
         LogicOrArith *parse_primary_exp(string &str){
             if (expStr.startsWith("(")){
-                expStr.remove_parenthesis();
-                return parse_or_exp(str);
+                string subexpStr = expStr.getSubExpressionString();
+                Parser *subparser = new Parser(subexpStr);
+                LogicOrArith *subexpResult = subparser->valExpr;
+                return subexpResult;
             }
             LogicOrArith *val = parse_lit(str);
             return val;
