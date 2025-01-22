@@ -1,6 +1,6 @@
 #include "arith_expr.hpp"
 #include "logic_expr.hpp"
-#include "parser.cpp"
+#include "parser.hpp"
 #include "litexp.h"
 #include <functional>
 #include <stdexcept>
