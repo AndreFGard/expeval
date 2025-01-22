@@ -9,9 +9,10 @@ class LogicExp: public LitExp<LogicExp, bool> {
         LogicExp (bool val);
         LogicExp (char *expStr); //prevent the compiler from casting char * to bool
         LogicExp (string expStr);
-        bool or_op(LitExp *b) override;
-        bool and_op(LitExp *b) override;
-        bool equal(LitExp *b) override;
+        bool or_op(LitExp *b);
+        bool and_op(LitExp *b);
+        bool equal(LogicArithExpression *b) override;
+        variant<bool,long long> apply_operator(Operator op, Expression *b) override;
         inline bool getVal() const;
         inline void invert();
     protected:
