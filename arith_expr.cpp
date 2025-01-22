@@ -15,6 +15,8 @@ ArithExp::ArithExp(const string &expStr): expStr(expStr){
     val = stoll(expStr);
 }
 
+ArithExp::ArithExp(char *expStr): ArithExp(string(expStr)) {}
+
 
 ArithExp *ArithExp::is_compatible(LogicArithExpression *b){
     return dynamic_cast<ArithExp *>(b);

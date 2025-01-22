@@ -239,10 +239,10 @@ class Parser{
         LogicArithExpression *parse_lit(string &str){
             variant<bool,lli> lit = expStr.parseLit();
             if (bool *b = get_if<bool>(&lit)){
-                return new LogicExp((*b) ? "true" : "false");
+                return new LogicExp(*b);
             }
             else if (lli *i = get_if<lli>(&lit)){
-                return new ArithExp(to_string(*i));
+                return new ArithExp(*i);
             }
             else throw runtime_error("Invalid literal");
         }

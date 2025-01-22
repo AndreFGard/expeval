@@ -10,6 +10,7 @@ class ArithExp: public LitExp<ArithExp, lli> {
     public:
         ArithExp(const string &expStr);
         ArithExp(lli expVal);
+        ArithExp(char *expStr); // prevent the compiler from casting char * to lli
         inline lli getVal() const {
             return val;
         }

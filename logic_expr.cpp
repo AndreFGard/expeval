@@ -3,10 +3,12 @@
 #include <string>
 using namespace std;
 
-//may throw
+
+
 LogicExp::LogicExp(bool expVal): expStr((expVal) ? "true": "false"){
     val = expVal;
 }
+LogicExp::LogicExp(char *expStr) : LogicExp(string(expStr)) {}
 
 LogicExp::LogicExp(string expStr): expStr(expStr){
     if (expStr == "true") val = true;

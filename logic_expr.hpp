@@ -9,6 +9,7 @@ class LogicExp: public LitExp<LogicExp, bool> {
             return (val) ? "true" : "false";
         }
         LogicExp (bool val);
+        LogicExp (char *expStr); //prevent the compiler from casting char * to bool
         LogicExp (string expStr);
         bool or_op(LitExp *b) override;
         bool and_op(LitExp *b) override;
