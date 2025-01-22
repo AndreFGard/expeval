@@ -41,14 +41,14 @@ class LitExp: public LogicArithExpression
         
         virtual bool equal(LogicArithExpression *b) =0;
 
-        variant<bool,long long> apply_operator(Operator op, Expression *b) =0;
+        variant<bool,long long> apply_operator(Operator op, LogicArithExpression *b) =0;
         
         //apply binary operator
 
         // const inline string getExpStr() const { return expStr; }
         // friend ostream &operator<<(ostream &os, const Expr &expr);
     protected:
-        virtual Derive* is_compatible(Expression *b) = 0;
+        virtual Derive* is_compatible(LogicArithExpression *b) = 0;
         LitExp() = default; //prohibiting creation of Litexps, as shown in the documentation
 };
 

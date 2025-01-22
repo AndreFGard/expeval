@@ -51,7 +51,7 @@ string LogicExp::toStr() {
     return (val) ? "true" : "false";
 }
 
-variant<bool,long long> LogicExp::apply_operator(Operator op, Expression *b){
+variant<bool,long long> LogicExp::apply_operator(Operator op, LogicArithExpression *b){
     if (LogicExp *castedB = is_compatible(b)){
         switch (op.getType()){
             case OperatorType::Or:
