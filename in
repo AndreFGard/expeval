@@ -1,1 +1,8 @@
-true == ( 2 == 2 )
+( true || false ) == false
+1
+2 + 3 * 2
+( 2 - - -3 ) * 2
+3 / 2
+true || false == false
+( true || false ) == false
+true + 3
