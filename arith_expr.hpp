@@ -9,6 +9,7 @@ typedef long long int lli;
 class ArithExp: public LitExp<ArithExp, lli> {
     public:
         ArithExp(const string &expStr);
+        ArithExp(lli expVal);
         inline lli getVal() const {
             return val;
         }

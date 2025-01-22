@@ -5,6 +5,12 @@
 using namespace std;
 
 //may throw
+
+ArithExp::ArithExp(const lli expVal): expStr(to_string(expVal)){
+    val = expVal;
+}
+
+
 ArithExp::ArithExp(const string &expStr): expStr(expStr){
     val = stoll(expStr);
 }

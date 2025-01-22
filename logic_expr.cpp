@@ -4,6 +4,10 @@
 using namespace std;
 
 //may throw
+LogicExp::LogicExp(bool expVal): expStr((expVal) ? "true": "false"){
+    val = expVal;
+}
+
 LogicExp::LogicExp(string expStr): expStr(expStr){
     if (expStr == "true") val = true;
     else if (expStr == "false") val = false;
