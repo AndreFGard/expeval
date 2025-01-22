@@ -12,7 +12,7 @@ LogicExp::LogicExp(string expStr): expStr(expStr){
 
 
 //todo make dynamic cast
-LogicExp *LogicExp::is_compatible(Expression *b){
+LogicExp *LogicExp::is_compatible(LogicArithExpression *b){
     return dynamic_cast<LogicExp *>(b);
 }
 

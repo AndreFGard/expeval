@@ -28,7 +28,7 @@ class ArithExp: public LitExp<ArithExp, lli> {
         bool greater(LitExp *b) override;
 
     protected:
-        ArithExp *is_compatible(Expression *b) override;
+        ArithExp *is_compatible(LogicArithExpression *b) override;
     private:
         lli val;
         const string expStr;

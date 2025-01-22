@@ -10,7 +10,7 @@ ArithExp::ArithExp(const string &expStr): expStr(expStr){
 }
 
 
-ArithExp *ArithExp::is_compatible(Expression *b){
+ArithExp *ArithExp::is_compatible(LogicArithExpression *b){
     return dynamic_cast<ArithExp *>(b);
 }
 
@@ -42,7 +42,7 @@ lli ArithExp::mul(LitExp *b){
     }
 
 lli ArithExp::div(LitExp *b){
-    if (const ArithExp * castedb = is_compatible(b)){
+    if (const ArithExp *castedb = is_compatible(b)){
         val = val / castedb->getVal();
         return val;
     }
@@ -50,21 +50,21 @@ lli ArithExp::div(LitExp *b){
 }
 
 bool ArithExp::equal(LitExp *b){
-    if (const ArithExp * castedb = is_compatible(b)){
+    if (const ArithExp *castedb = is_compatible(b)){
         return (val == castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
 }
 
 bool ArithExp::less(LitExp *b){
-    if (const ArithExp * castedb = is_compatible(b)){
+    if (const ArithExp *castedb = is_compatible(b)){
         return (val < castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
 }
 
 bool ArithExp::greater(LitExp *b){
-    if (const ArithExp * castedb = is_compatible(b)){
+    if (const ArithExp *castedb = is_compatible(b)){
         return (val > castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
