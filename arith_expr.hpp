@@ -11,15 +11,10 @@ class ArithExp: public LitExp<ArithExp, lli> {
         ArithExp(const string &expStr);
         ArithExp(lli expVal);
         ArithExp(char *expStr); // prevent the compiler from casting char * to lli
-        inline lli getVal() const {
-            return val;
-        }
-        inline void invert(){
-            val = -val;
-        }
-        string toStr() override {
-            return to_string(val);
-        }
+        inline lli getVal() const;
+        inline void invert();
+
+        string toStr() override;
         
         lli add(LitExp *b) override;
         lli sub(LitExp *b) override;
@@ -35,3 +30,11 @@ class ArithExp: public LitExp<ArithExp, lli> {
         lli val;
         const string expStr;
 };
+
+inline lli ArithExp::getVal() const {
+    return val;
+}
+
+inline void ArithExp::invert(){
+    val = -val;
+}

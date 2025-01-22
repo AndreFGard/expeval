@@ -46,3 +46,7 @@ bool LogicExp::equal(LitExp *b){
     else throw invalid_argument("Invalid argument: different types");
 }
 
+
+string LogicExp::toStr() {
+    return (val) ? "true" : "false";
+}

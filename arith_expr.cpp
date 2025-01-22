@@ -4,7 +4,9 @@
 
 using namespace std;
 
-//may throw
+string ArithExp::toStr(){
+    return to_string(val);
+}
 
 ArithExp::ArithExp(const lli expVal): expStr(to_string(expVal)){
     val = expVal;
