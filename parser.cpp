@@ -128,8 +128,9 @@ class Parser{
                 LogicArithExpression *val2 = (parse_and_exp(str));
 
                 //todo  deal with errors
-                val->apply_operator(op, val2);
-                return val;
+                //free val
+                LogicArithExpression *nval = new LogicExp(get<bool>(val->apply_operator(op, val2)));
+                return nval;
             }
             else return val;            
         }
@@ -140,8 +141,9 @@ class Parser{
             if (expStr.startsWith("&&")){
                 Operator op = expStr.parseOperator();
                 LogicArithExpression *val2 = (parse_eq_exp(str));
-                val->apply_operator(op, val2);
-                return val;
+
+                LogicArithExpression *nval = new LogicExp(get<bool>(val->apply_operator(op, val2)));
+                return nval;
             }
             return val;
         }
@@ -155,14 +157,14 @@ class Parser{
                 LogicArithExpression *val2 = (parse_rel_exp(str));
                 //todo fix this: is this correct? it should get
                 //any value, no matter what type it is.
-                val->apply_operator(op, val2);
-                return val;
+                LogicArithExpression *nval = new LogicExp(get<bool>(val->apply_operator(op, val2)));
+                return nval;
             }
             else if (expStr.startsWith("!=")){
                 Operator op = expStr.parseOperator();
                 LogicArithExpression *val2 = (parse_rel_exp(str));
-                val->apply_operator(op, val2);
-                return val;   
+                LogicArithExpression *nval = new LogicExp(get<bool>(val->apply_operator(op, val2)));
+                return nval;
             }
             return val;
         }
@@ -178,8 +180,8 @@ class Parser{
                 if (!expStr.startsWith(opStr)) continue;
                 Operator op = expStr.parseOperator();
                 LogicArithExpression *val2 = (parse_add_exp(str));
-                val->apply_operator(op, val2);
-                return val;  
+                LogicArithExpression *nval = new LogicExp(get<bool>(val->apply_operator(op, val2)));
+                return nval;
             }
             return val;
         }
