@@ -7,7 +7,6 @@
 
 using namespace std;
 //todo fix expressionstring as it shouldnt inherit string
-typedef Expression LogicOrArith;
 class ExpressionString{
     public:
         ExpressionString(string_view str){
@@ -102,7 +101,7 @@ class Parser{
         Parser(string originalExpStr) : expStr(originalExpStr){
             parse(originalExpStr);
         }
-        Expression *valExpr;
+        LogicArithExpression *valExpr;
 
         string toStr(){
             return valExpr->toStr();
@@ -115,61 +114,63 @@ class Parser{
         
         void parse(string str){
             expStr = ExpressionString(str);
-            LogicOrArith *parse_val(parse_or_exp(str)); 
+            LogicArithExpression *parse_val(parse_or_exp(str)); 
             valExpr = parse_val;
         }
 
-        LogicOrArith *parse_or_exp(string &str){
-            LogicOrArith *val = (parse_and_exp(str));
+        LogicArithExpression *parse_or_exp(string &str){
+            LogicArithExpression *val = (parse_and_exp(str));
 
             if (expStr.startsWith("||")){
                 Operator op = expStr.parseOperator();
                 if (op.getType() != OperatorType::Or) 
                     throw runtime_error("Operator parsing not working");
-                LogicOrArith *val2 = (parse_and_exp(str));
+                LogicArithExpression *val2 = (parse_and_exp(str));
 
                 //todo  deal with errors
-                val->apply_operator(op, val2);
-                return val;
+                //free val
+                LogicArithExpression *nval = new LogicExp(get<bool>(val->apply_operator(op, val2)));
+                return nval;
             }
             else return val;            
         }
 
-        LogicOrArith *parse_and_exp(string &str){
-            LogicOrArith *val = (parse_eq_exp(str));
+        LogicArithExpression *parse_and_exp(string &str){
+            LogicArithExpression *val = (parse_eq_exp(str));
 
             if (expStr.startsWith("&&")){
                 Operator op = expStr.parseOperator();
-                LogicOrArith *val2 = (parse_eq_exp(str));
-                val->apply_operator(op, val2);
-                return val;
+                LogicArithExpression *val2 = (parse_eq_exp(str));
+
+                LogicArithExpression *nval = new LogicExp(get<bool>(val->apply_operator(op, val2)));
+                return nval;
             }
             return val;
         }
         
         //todo check compatibility here, to more quickly know if there
         //is a mismatch between subexpr types
-        LogicOrArith *parse_eq_exp(string &str){
-            LogicOrArith *val = (parse_rel_exp(str));
+        LogicArithExpression *parse_eq_exp(string &str){
+            LogicArithExpression *val = (parse_rel_exp(str));
             if (expStr.startsWith("==")){                
                 Operator op = expStr.parseOperator();
-                LogicOrArith *val2 = (parse_rel_exp(str));
+                LogicArithExpression *val2 = (parse_rel_exp(str));
                 //todo fix this: is this correct? it should get
                 //any value, no matter what type it is.
-                val->apply_operator(op, val2);
-                return val;
+                LogicArithExpression *nval = new LogicExp(get<bool>(val->apply_operator(op, val2)));
+                return nval;
             }
             else if (expStr.startsWith("!=")){
                 Operator op = expStr.parseOperator();
-                LogicOrArith *val2 = (parse_rel_exp(str));
-                val->apply_operator(op, val2);
-                return val;   
+                LogicArithExpression *val2 = (parse_rel_exp(str));
+                LogicArithExpression *nval = new LogicExp(get<bool>(val->apply_operator(op, val2)));
+                return nval;
             }
             return val;
         }
 
-        LogicOrArith *parse_rel_exp(string &str){
-            LogicOrArith *val = (parse_add_exp(str));
+        LogicArithExpression *parse_rel_exp(string &str){
+            LogicArithExpression *val = (parse_add_exp(str));
 
             vector<string> opStrs = {
                 "<",">","<=",">="
@@ -178,70 +179,70 @@ class Parser{
             for (auto &opStr: opStrs){
                 if (!expStr.startsWith(opStr)) continue;
                 Operator op = expStr.parseOperator();
-                LogicOrArith *val2 = (parse_add_exp(str));
-                val->apply_operator(op, val2);
-                return val;  
+                LogicArithExpression *val2 = (parse_add_exp(str));
+                LogicArithExpression *nval = new LogicExp(get<bool>(val->apply_operator(op, val2)));
+                return nval;
             }
             return val;
         }
 
-        LogicOrArith *parse_add_exp(string &str){
-            LogicOrArith *val = (parse_mul_exp(str));
+        LogicArithExpression *parse_add_exp(string &str){
+            LogicArithExpression *val = (parse_mul_exp(str));
             vector<string> opStrs = {"- ", "+"};
             for (auto &opStr: opStrs){
                 if (!expStr.startsWith(opStr)) continue;
                 Operator op = expStr.parseOperator();
-                LogicOrArith *val2 = (parse_mul_exp(str));
+                LogicArithExpression *val2 = (parse_mul_exp(str));
                 val->apply_operator(op, val2);
                 return val;  
             }
             return val;
         }
 
-        LogicOrArith *parse_mul_exp(string &str){
-            LogicOrArith *val = (parse_unary_exp(str));
+        LogicArithExpression *parse_mul_exp(string &str){
+            LogicArithExpression *val = (parse_unary_exp(str));
             vector< string> opStrs = {"*", "/"};
             for (auto &opStr: opStrs){
                 if (!expStr.startsWith(opStr)) continue;
                 Operator op = expStr.parseOperator();
-                LogicOrArith *val2 = (parse_unary_exp(str));
+                LogicArithExpression *val2 = (parse_unary_exp(str));
                 val->apply_operator(op, val2); 
                 return val;  
             }
             return val;
         }
        
-        LogicOrArith *parse_unary_exp(string &str){
+        LogicArithExpression *parse_unary_exp(string &str){
             if (expStr.startsWith("- ")){
                 Operator op = expStr.parseOperator();
                 //todo apply the minuss operator with an unary operator function;
-                LogicOrArith *val = (parse_unary_exp(str));
+                LogicArithExpression *val = (parse_unary_exp(str));
                 val->invert();
                 return val;
             }
-            LogicOrArith *val = parse_primary_exp(str);
+            LogicArithExpression *val = parse_primary_exp(str);
             return val;
         }
 
-        LogicOrArith *parse_primary_exp(string &str){
+        LogicArithExpression *parse_primary_exp(string &str){
             if (expStr.startsWith("(")){
                 string subexpStr = expStr.getSubExpressionString();
                 Parser *subparser = new Parser(subexpStr);
-                LogicOrArith *subexpResult = subparser->valExpr;
+                LogicArithExpression *subexpResult = subparser->valExpr;
                 return subexpResult;
             }
-            LogicOrArith *val = parse_lit(str);
+            LogicArithExpression *val = parse_lit(str);
             return val;
         }
 
 
-        LogicOrArith *parse_lit(string &str){
+        LogicArithExpression *parse_lit(string &str){
             variant<bool,lli> lit = expStr.parseLit();
             if (bool *b = get_if<bool>(&lit)){
-                return new LogicExp((*b) ? "true" : "false");
+                return new LogicExp(*b);
             }
             else if (lli *i = get_if<lli>(&lit)){
-                return new ArithExp(to_string(*i));
+                return new ArithExp(*i);
             }
             else throw runtime_error("Invalid literal");
         }

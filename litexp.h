@@ -3,19 +3,21 @@ using namespace std;
 #include <string>
 #include "operator.hpp"
 #include <stdexcept>
+#include <variant>
 
-
+template <typename opReturnType1, typename opReturnType2>
 class Expression {
     protected:
         Expression() = default;
         bool invert_val = false;
     public:
-        virtual void apply_operator(Operator op, Expression *b) = 0;
+        virtual variant<opReturnType1,opReturnType2> apply_operator(Operator op, Expression *b) = 0;
         virtual string toStr() = 0;
         virtual void invert() = 0;
 
 };
 
+using LogicArithExpression = Expression<bool, long long>;
 
 //todo: static assert to force the implementation of methods
 //this is crtp like, but also creates vtables as runtime polymorphism makes the code smaller
@@ -23,7 +25,7 @@ class Expression {
 //todo perhaps use std::visit + std;:alternatives to do fancier polymorphism and use overloading instead of 
 //dynamic cast
 template <typename Derive, typename val_type>
-class LitExp: public Expression
+class LitExp: public LogicArithExpression
 {
     private:
         const string expStr;
@@ -65,7 +67,7 @@ class LitExp: public Expression
             throw runtime_error("greater() not implemented");
         }
         
-        void apply_operator(Operator op, Expression *b) override;
+        variant<bool,long long> apply_operator(Operator op, Expression *b) override;
 
         virtual bool less_equal(LitExp *b);
         virtual bool greater_equal(LitExp *b);
@@ -99,7 +101,7 @@ bool LitExp<Derive, val_type>::not_equal(LitExp<Derive, val_type> *b) {
 }
 
 template <typename Derive, typename val_type>
-void LitExp<Derive, val_type>::apply_operator(Operator op, Expression *b) {
+variant<bool,long long> LitExp<Derive, val_type>::apply_operator(Operator op, Expression *b) {
     OperatorType opType = op.getType();
 
     //Hereby, I declare: this static cast shall work
@@ -113,29 +115,29 @@ void LitExp<Derive, val_type>::apply_operator(Operator op, Expression *b) {
     //Add, Subtract, Multiply, Divide, And, Or, NotEqual, Equal, LessEqual, GreaterEqual, Less, Greater
     switch (opType) {
         case OperatorType::Or:
-            thisCast->or_op(b2); return;
+            return thisCast->or_op(b2);
         case OperatorType::And:
-            thisCast->and_op(b2); return;
+            return thisCast->and_op(b2);
         case OperatorType::Add:
-            thisCast->add(b2);return;
+            return thisCast->add(b2);
         case OperatorType::Multiply:
-            thisCast->mul(b2); return;
+            return thisCast->mul(b2);
         case OperatorType::Divide:
-            thisCast->div(b2); return;
+            return thisCast->div(b2);
         case OperatorType::Equal:
-            thisCast->equal(b2); return;
+            return thisCast->equal(b2);
         case OperatorType::NotEqual:
-            !thisCast->equal(b2); return;
+            return !thisCast->equal(b2);
         case OperatorType::GreaterEqual:
-            (thisCast->equal(b2) || thisCast->greater(b2));
+            return (thisCast->equal(b2) || thisCast->greater(b2));
         case OperatorType::LessEqual:
-            !thisCast->greater(b2); return;
+            return !thisCast->greater(b2);
         case OperatorType::Greater:
-            thisCast->greater(b2); return;
+            return thisCast->greater(b2);
         case OperatorType::Less:
-            (thisCast->less(b2)); return;
+            return (thisCast->less(b2));
         case OperatorType::Subtract:
-            (thisCast->sub(b2)); return;
+            return (thisCast->sub(b2));
         default:
             throw runtime_error("Unimplemented operator: " + op);
     }

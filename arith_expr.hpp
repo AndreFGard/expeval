@@ -9,15 +9,12 @@ typedef long long int lli;
 class ArithExp: public LitExp<ArithExp, lli> {
     public:
         ArithExp(const string &expStr);
-        inline lli getVal() const {
-            return val;
-        }
-        inline void invert(){
-            val = -val;
-        }
-        string toStr() override {
-            return to_string(val);
-        }
+        ArithExp(lli expVal);
+        ArithExp(char *expStr); // prevent the compiler from casting char * to lli
+        inline lli getVal() const;
+        inline void invert();
+
+        string toStr() override;
         
         lli add(LitExp *b) override;
         lli sub(LitExp *b) override;
@@ -28,8 +25,16 @@ class ArithExp: public LitExp<ArithExp, lli> {
         bool greater(LitExp *b) override;
 
     protected:
-        ArithExp *is_compatible(Expression *b) override;
+        ArithExp *is_compatible(LogicArithExpression *b) override;
     private:
         lli val;
         const string expStr;
 };
+
+inline lli ArithExp::getVal() const {
+    return val;
+}
+
+inline void ArithExp::invert(){
+    val = -val;
+}

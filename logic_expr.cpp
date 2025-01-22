@@ -3,7 +3,13 @@
 #include <string>
 using namespace std;
 
-//may throw
+
+
+LogicExp::LogicExp(bool expVal): expStr((expVal) ? "true": "false"){
+    val = expVal;
+}
+LogicExp::LogicExp(char *expStr) : LogicExp(string(expStr)) {}
+
 LogicExp::LogicExp(string expStr): expStr(expStr){
     if (expStr == "true") val = true;
     else if (expStr == "false") val = false;
@@ -12,7 +18,7 @@ LogicExp::LogicExp(string expStr): expStr(expStr){
 
 
 //todo make dynamic cast
-LogicExp *LogicExp::is_compatible(Expression *b){
+LogicExp *LogicExp::is_compatible(LogicArithExpression *b){
     return dynamic_cast<LogicExp *>(b);
 }
 
@@ -40,3 +46,7 @@ bool LogicExp::equal(LitExp *b){
     else throw invalid_argument("Invalid argument: different types");
 }
 
+
+string LogicExp::toStr() {
+    return (val) ? "true" : "false";
+}
