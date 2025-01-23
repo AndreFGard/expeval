@@ -19,6 +19,8 @@ void Parser::parse(string str){
 LogicArithExpression *Parser::parse_or_exp(string &str){
     LogicArithExpression *val = (parse_and_exp(str));
 
+    //if (expStr.startsWith(Operator::OpToString(OperatorType::Or)))
+    //decided against using that as I feel it makes the code less readable
     if (expStr.startsWith("||")){
         Operator op = expStr.parseOperator();
         if (op.getType() != OperatorType::Or) 

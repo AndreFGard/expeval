@@ -3,7 +3,7 @@
 using namespace std;
 
 //todo move this to inside Operator
-static const unordered_map<string, OperatorType> stringToOp {
+const unordered_map<string, OperatorType> Operator::stringToOp {
         { "+", OperatorType::Add },
         { "- ", OperatorType::Subtract }, //note the whitespace
         { "*", OperatorType::Multiply },
@@ -18,6 +18,14 @@ static const unordered_map<string, OperatorType> stringToOp {
         { ">", OperatorType::Greater }
 };
 
+//lambda as this function is useless elsewhere
+const unordered_map<int, const string> Operator::opToString = [](){
+    unordered_map<int, const string> opToString;
+    for (auto [str, op]: stringToOp){
+        opToString.insert({(int) op, str});
+    }
+    return opToString;
+}();
 
 Operator::Operator(string_view op): string(op){
     arity = 2;
