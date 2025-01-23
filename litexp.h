@@ -9,7 +9,6 @@ template <typename opReturnType1, typename opReturnType2>
 class Expression {
     protected:
         Expression() = default;
-        bool invert_val = false;
     public:
         virtual variant<opReturnType1,opReturnType2> apply_operator(Operator op, Expression *b) = 0;
         virtual string toStr() = 0;
