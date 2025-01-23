@@ -28,7 +28,15 @@ class Operator: public string{
         int arity;
     public:
         Operator(string_view op);
-        inline OperatorType getType() {return type;};
+        inline OperatorType getType() const;
         //returns the size of the string of the operator
-        inline int getSize() const { return size; }
-    };
+        inline int getSize() const;
+};
+
+inline OperatorType Operator::getType() const {
+    return type;
+};
+
+inline int Operator::getSize() const {
+     return size; 
+}
