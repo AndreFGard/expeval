@@ -30,3 +30,42 @@ false != true
 ( 12 - 1 ) >= true
 ( 12 - 1 ) <= false
 ( 12 - 1 ) <= true
+false + ( 12 - 1 )
+true + ( 12 - 1 )
+false * ( 12 - 1 )
+true * ( 12 - 1 )
+false < ( 12 - 1 )
+true < ( 12 - 1 )
+false > ( 12 - 1 )
+true > ( 12 - 1 )
+false >= ( 12 - 1 )
+true >= ( 12 - 1 )
+false <= ( 12 - 1 )
+true <= ( 12 - 1 )
+false || ( 12 - 1 )
+true || ( 12 - 1 )
+false && ( 12 - 1 )
+true && ( 12 - 1 )
+false == ( 12 - 1 )
+true == ( 12 - 1 )
+false != ( 12 - 1 )
+true != ( 12 - 1 )
+false - ( 12 - 1 )
+true - ( 12 - 1 )
+false / ( 12 - 1 )
+true / ( 12 - 1 )
+5 == 7
+10 + 5
+8 - 3
+4 * 2
+9 / 3
+true && true
+false || true
+( 5 + 3 ) * 2
+( 10 - 2 ) / 4
+( 6 * 3 ) == 18
+( 8 / 2 ) != 5
+true == ( 3 < 5 )
+false == ( 7 > 10 )
+( 4 + 6 ) >= 10
+( 9 - 1 ) <= 8
