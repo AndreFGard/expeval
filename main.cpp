@@ -17,7 +17,6 @@ int main(){
             cout << x.toStr() << endl;
         } catch(...) {
             cout << "error" << endl;
-            return false;
         }
     }
     
