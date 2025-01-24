@@ -10,17 +10,27 @@ using namespace std;
 
 int main(int argc, char *argv[]){
 
-    #ifdef DBG
-        ifstream inStream("in");
-        int operations = INT32_MAX;
-    #else
-        istream &inStream = cin;
-        int operations;
-        cin >> operations;
-    #endif
 
     string expstr;
-    while (getline(inStream, expstr)){
+    #ifdef DBG
+        ifstream inStream; //auto closed
+        inStream.open("in");
+        if (!inStream.is_open()) {
+            cerr << "couldnt open test file in" << endl;
+            cerr << "please dont use -DDBG if you dont have a test file" << endl;
+            return 1;
+        }
+        int noperations = INT32_MAX;
+    #else
+        istream &inStream = cin;
+        int noperations;
+        cin >> noperations;
+        getline(cin, expstr);
+        // remove leftover newline
+    #endif
+    
+    int ops = 0;
+    while (( ops++ < noperations) && getline(inStream, expstr)){
         try {
             Parser x(expstr);
             cout << x.toStr() << endl;
