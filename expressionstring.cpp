@@ -1,13 +1,13 @@
 #include "expressionstring.hpp"
 
-Operator ExpressionString::parseOperator(){
+Operator Tokenizer::parseOperator(){
     auto temp = Operator(view.substr(0, 2));
     moveView(temp.getSize());
     stripView();
     return temp;
 }
 
-string ExpressionString::getSubExpressionString(){
+string Tokenizer::getSubExpressionString(){
     int firstOpening = 0, lastClosing =-1;
     int levelsToIgnore = 0;
     
@@ -28,18 +28,18 @@ string ExpressionString::getSubExpressionString(){
     return temp;
 }
 
-ExpressionString::ExpressionString(string_view str){
+Tokenizer::Tokenizer(string_view str){
     view = string_view(str);
     stripView();
     original = string(str);
 }
 
-string ExpressionString::getOriginalString(){
+string Tokenizer::getOriginalString(){
     return original;
 }
 
 
-variant<bool, lli> ExpressionString::parseLit(){
+variant<bool, lli> Tokenizer::parseLit(){
     if (startsWith("true")){
         moveView(4);
         return true;

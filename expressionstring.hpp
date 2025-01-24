@@ -5,9 +5,9 @@ using namespace std;
 #include "operator.hpp"
 #include <variant>
 typedef long long int lli;
-class ExpressionString{
+class Tokenizer{
     public:
-        ExpressionString(string_view str);
+        Tokenizer(string_view str);
         string getOriginalString();
         
         inline bool startsWith(string prefix);
@@ -30,21 +30,21 @@ class ExpressionString{
 };
 
 
-inline bool ExpressionString::startsWith(string prefix){
+inline bool Tokenizer::startsWith(string prefix){
     return (view.rfind(prefix,0) == 0);
 }
 
-inline string_view ExpressionString::getView(){
+inline string_view Tokenizer::getView(){
     return view;
 }
 
-inline void ExpressionString::moveView(int n){
+inline void Tokenizer::moveView(int n){
     view = view.substr(n);
     index+=n;
     stripView();
 }
 
-inline void ExpressionString::stripView(){
+inline void Tokenizer::stripView(){
     while (view[0] == ' '){
         view = view.substr(1);
         index++;

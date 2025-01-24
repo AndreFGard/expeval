@@ -21,7 +21,7 @@ class Parser{
     private:
         int currentToken = 0;
 
-        ExpressionString expStr;
+        Tokenizer tokenizer;
         
         unique_ptr<LogicArithExpression>parse_or_exp();
 
