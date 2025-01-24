@@ -8,10 +8,19 @@
 #include <fstream>
 using namespace std;
 
-int main(){
+int main(int argc, char *argv[]){
+
+    #ifdef DBG
+        ifstream inStream("in");
+        int operations = INT32_MAX;
+    #else
+        istream &inStream = cin;
+        int operations;
+        cin >> operations;
+    #endif
 
     string expstr;
-    while (getline(cin, expstr)){
+    while (getline(inStream, expstr)){
         try {
             Parser x(expstr);
             cout << x.toStr() << endl;
