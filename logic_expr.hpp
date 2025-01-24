@@ -14,7 +14,6 @@ class LogicExp: public LitExp<LogicExp, bool> {
         bool equal(LogicArithExpression *b) override;
         variant<bool,long long> apply_operator(const Operator &op, LogicArithExpression *b) override;
         inline bool getVal() const;
-        inline void invert();
     protected:
         LogicExp *is_compatible(LogicArithExpression *b) override;
     private:
@@ -28,6 +27,3 @@ inline bool LogicExp::getVal() const {
     return val;
 };
 
-inline void LogicExp::invert(){
-    val = !val;
-}

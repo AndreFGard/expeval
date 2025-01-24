@@ -111,7 +111,11 @@ unique_ptr<LogicArithExpression>Parser::parse_unary_exp(){
         
         unique_ptr<LogicArithExpression>val = (parse_unary_exp());
         //is this error prone?
-        val->invert();
+        //val->invert();
+        if (auto castedVal = dynamic_cast<ArithExp *>(val.get())){
+            castedVal->invert();
+        }
+        else throw invalid_argument("- cant be applied to logic expression");
         return val;
     }
     unique_ptr<LogicArithExpression>val = parse_primary_exp();

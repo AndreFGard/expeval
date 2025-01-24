@@ -12,8 +12,6 @@ class Expression {
     public:
         virtual variant<opReturnType1,opReturnType2> apply_operator(const Operator &op, Expression *b) = 0;
         virtual string toStr() = 0;
-        virtual void invert() = 0;
-
 };
 
 using LogicArithExpression = Expression<bool, long long>;
