@@ -9,8 +9,19 @@ Operator ExpressionString::parseOperator(){
 
 string ExpressionString::getSubExpressionString(){
     int firstOpening = 0, lastClosing =-1;
-    for (int i=0;i<view.length();i++){
-        if (view[i] == ')') lastClosing = i;
+    int levelsToIgnore = 0;
+    
+    for (int i=1;i<view.length();i++){
+        if (view[i] == '('){
+            levelsToIgnore++;
+        }
+        if (view[i] == ')'){
+            if (levelsToIgnore == 0){
+                lastClosing = i;
+                break;
+            }
+            else levelsToIgnore--;
+        }
     }
     string temp = string(view).substr(1+1, lastClosing-firstOpening-1-1-1); //+1 because of spaces
     moveView(lastClosing+1);
