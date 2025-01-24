@@ -12,7 +12,7 @@ class LogicExp: public LitExp<LogicExp, bool> {
         bool or_op(LitExp *b);
         bool and_op(LitExp *b);
         bool equal(LogicArithExpression *b) override;
-        variant<bool,long long> apply_operator(Operator op, LogicArithExpression *b) override;
+        variant<bool,long long> apply_operator(const Operator &op, LogicArithExpression *b) override;
         inline bool getVal() const;
         inline void invert();
     protected:

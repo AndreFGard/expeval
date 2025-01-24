@@ -11,7 +11,6 @@ class ExpressionString{
         string getOriginalString();
         
         inline bool startsWith(string prefix);
-       //todo use operator as an enum or sum 
         Operator parseOperator();
 
         string getSubExpressionString();

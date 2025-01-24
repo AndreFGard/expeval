@@ -15,7 +15,7 @@ class ArithExp: public LitExp<ArithExp, lli> {
         inline void invert();
 
         string toStr() override;
-        variant<bool, long long> apply_operator(Operator op, Expression *b) override;
+        variant<bool, long long> apply_operator(const Operator &op, Expression *b) override;
         lli add(LogicArithExpression *b);
         lli sub(LogicArithExpression *b);
         lli mul(LogicArithExpression *b);

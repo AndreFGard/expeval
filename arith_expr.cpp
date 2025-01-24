@@ -81,7 +81,7 @@ bool ArithExp::greater(LogicArithExpression *b){
 }
 
 
-variant<bool,long long> ArithExp::apply_operator(Operator op, LogicArithExpression *b) {
+variant<bool,long long> ArithExp::apply_operator(const Operator &op, LogicArithExpression *b) {
     OperatorType opType = op.getType();
     if (ArithExp *castedB = is_compatible(b)){
         switch (opType) {

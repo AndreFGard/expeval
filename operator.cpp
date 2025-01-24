@@ -2,7 +2,6 @@
 #include <stdexcept>
 using namespace std;
 
-//todo move this to inside Operator
 const unordered_map<string, OperatorType> Operator::stringToOp {
         { "+", OperatorType::Add },
         { "- ", OperatorType::Subtract }, //note the whitespace

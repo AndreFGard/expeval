@@ -9,7 +9,6 @@
 #include <memory>
 #include <stdexcept>
 using namespace std;
-//todo fix expressionstring as it shouldnt inherit string
 using LogicArithExpression = Expression<bool, long long>;
 
 class Parser{
@@ -28,8 +27,6 @@ class Parser{
 
         unique_ptr<LogicArithExpression>parse_and_exp();
         
-        //todo check compatibility here, to more quickly know if there
-        //is a mismatch between subexpr types
         unique_ptr<LogicArithExpression>parse_eq_exp();
 
         unique_ptr<LogicArithExpression>parse_rel_exp();

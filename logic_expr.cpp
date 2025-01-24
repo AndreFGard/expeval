@@ -17,7 +17,6 @@ LogicExp::LogicExp(string expStr): expStr(expStr){
 }
 
 
-//todo make dynamic cast
 LogicExp *LogicExp::is_compatible(LogicArithExpression *b){
     return dynamic_cast<LogicExp *>(b);
 }
@@ -51,7 +50,7 @@ string LogicExp::toStr() {
     return (val) ? "true" : "false";
 }
 
-variant<bool,long long> LogicExp::apply_operator(Operator op, LogicArithExpression *b){
+variant<bool,long long> LogicExp::apply_operator(const Operator &op, LogicArithExpression *b){
     if (LogicExp *castedB = is_compatible(b)){
         switch (op.getType()){
             case OperatorType::Or:
