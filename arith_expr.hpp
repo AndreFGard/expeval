@@ -2,7 +2,7 @@
 using namespace std;
 #include <string>
 #include <stdexcept>
-#include "litexp.h"
+#include "litexp.hpp"
 #include <string>
 
 typedef long long int lli;

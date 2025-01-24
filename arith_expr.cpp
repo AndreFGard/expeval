@@ -1,4 +1,4 @@
-#include "litexp.h"
+#include "litexp.hpp"
 #include "arith_expr.hpp"
 #include <stdexcept>
 

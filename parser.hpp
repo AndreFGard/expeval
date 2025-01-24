@@ -1,6 +1,6 @@
 #pragma once
 #include "tokenizer.hpp"
-#include "litexp.h"
+#include "litexp.hpp"
 #include <vector>
 #include "tokenizer.hpp"
 #include "logic_expr.hpp"
