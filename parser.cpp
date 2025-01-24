@@ -25,8 +25,6 @@ unique_ptr<LogicArithExpression>Parser::parse_or_exp(){
             throw runtime_error("Operator parsing not working");
         unique_ptr<LogicArithExpression>val2 = (parse_and_exp());
 
-        //todo  deal with errors
-        //free val
         unique_ptr<LogicArithExpression>nval = make_unique<LogicExp>(get<bool>(val->apply_operator(op, val2.get())));
         return nval;
     }
@@ -51,8 +49,7 @@ unique_ptr<LogicArithExpression>Parser::parse_eq_exp(){
     if (expStr.startsWith("==")){                
         Operator op = expStr.parseOperator();
         unique_ptr<LogicArithExpression>val2 = (parse_rel_exp());
-        //todo fix this: is this correct? it should get
-        //any value, no matter what type it is.
+
         unique_ptr<LogicArithExpression>nval = make_unique<LogicExp>(get<bool>(val->apply_operator(op, val2.get())));
         return nval;
     }
@@ -111,8 +108,9 @@ unique_ptr<LogicArithExpression>Parser::parse_mul_exp(){
 unique_ptr<LogicArithExpression>Parser::parse_unary_exp(){
     if (expStr.startsWith("- ")){
         Operator op = expStr.parseOperator();
-        //todo apply the minuss operator with an unary operator function;
+        
         unique_ptr<LogicArithExpression>val = (parse_unary_exp());
+        //is this error prone?
         val->invert();
         return val;
     }
