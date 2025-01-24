@@ -10,7 +10,7 @@ class Expression {
     protected:
         Expression() = default;
     public:
-        virtual variant<opReturnType1,opReturnType2> apply_operator(Operator op, Expression *b) = 0;
+        virtual variant<opReturnType1,opReturnType2> apply_operator(const Operator &op, Expression *b) = 0;
         virtual string toStr() = 0;
         virtual void invert() = 0;
 
@@ -18,8 +18,7 @@ class Expression {
 
 using LogicArithExpression = Expression<bool, long long>;
 
-//todo: static assert to force the implementation of methods
-//this is crtp like, but also creates vtables as runtime polymorphism makes the code smaller
+//this seems crtp-like
 
 //todo perhaps use std::visit + std;:alternatives to do fancier polymorphism and use overloading instead of 
 //dynamic cast
@@ -40,12 +39,8 @@ class LitExp: public LogicArithExpression
         
         virtual bool equal(LogicArithExpression *b) =0;
 
-        variant<bool,long long> apply_operator(Operator op, LogicArithExpression *b) =0;
-        
-        //apply binary operator
+        variant<bool,long long> apply_operator(const Operator &op, LogicArithExpression *b) =0;
 
-        // const inline string getExpStr() const { return expStr; }
-        // friend ostream &operator<<(ostream &os, const Expr &expr);
     protected:
         virtual Derive* is_compatible(LogicArithExpression *b) = 0;
         LitExp() = default; //prohibiting creation of Litexps, as shown in the documentation
