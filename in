@@ -11,3 +11,22 @@ true
 42 >= ( 6 * ( 8 - 1 ) )
 42 >= ( ( 6 * ( 8 - 1 ) ) - 1 )
 42 >= ( ( 6 * ( 8 - 1 ) ) + 1 )
+( 43 <= 44 ) || false
+( 43 <= 43 ) || false
+( 43 <= 42 ) || false
+( ( 43 <= 42 ) || false ) == false
+( ( 43 <= 42 ) || false ) != true
+false != true
+12 - 1
+( 12 - 1 ) + false
+( 12 - 1 ) + true
+( 12 - 1 ) * false
+( 12 - 1 ) * true
+( 12 - 1 ) < false
+( 12 - 1 ) < true
+( 12 - 1 ) > false
+( 12 - 1 ) > true
+( 12 - 1 ) >= false
+( 12 - 1 ) >= true
+( 12 - 1 ) <= false
+( 12 - 1 ) <= true
