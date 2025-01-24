@@ -109,7 +109,7 @@ unique_ptr<LogicArithExpression>Parser::parse_unary_exp(){
     if (tokenizer.startsWith("- ")){
         Operator op = tokenizer.parseOperator();
         
-        unique_ptr<LogicArithExpression>val = (parse_unary_exp());
+        unique_ptr<LogicArithExpression>val = (parse_primary_exp());
         //is this error prone?
         //val->invert();
         if (auto castedVal = dynamic_cast<ArithExp *>(val.get())){
