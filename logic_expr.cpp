@@ -60,6 +60,8 @@ variant<bool,long long> LogicExp::apply_operator(Operator op, LogicArithExpressi
                 return and_op(castedB);
             case OperatorType::Equal:
                 return equal(castedB);
+            case OperatorType::NotEqual:
+                return !equal(castedB);
             default:
                 throw invalid_argument("Invalid operator: " + op);
         }
