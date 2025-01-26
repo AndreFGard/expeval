@@ -53,6 +53,9 @@ lli ArithExp::mul(LogicArithExpression *b){
 
 lli ArithExp::div(LogicArithExpression *b){
     if (const ArithExp *castedb = is_compatible(b)){
+        if (castedb->getVal() == 0) {
+            throw invalid_argument("Division by zero");
+        }
         val = val / castedb->getVal();
         return val;
     }
