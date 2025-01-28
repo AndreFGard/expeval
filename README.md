@@ -6,8 +6,8 @@
 Este projeto requer acesso a um compilador compatível com o padrão de 2017, devido ao uso de ``std::string_view`` e de `std::variant`.
 
 ```bash 
-g++ arith_expr.cpp tokenizer. cpp logic_expr.cpp main.cpp operator.cpp parser.cpp -std=c++17 -o expeval
-expeval
+g++ arith_expr.cpp tokenizer.cpp logic_expr.cpp main.cpp operator.cpp parser.cpp -std=c++17 -o expeval
+./expeval
 ```
 
 Opcionalmente, a flag de compilação -DDBG pode ser usada para que o programa leia a entrada até o EOF.
