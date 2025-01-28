@@ -23,24 +23,21 @@ LogicExp *LogicExp::is_compatible(LogicArithExpression *b){
 
 bool LogicExp::or_op (LitExp *b) {
     if (const LogicExp *castedb = is_compatible(b)){
-        val = (val || castedb->getVal());
-        return val;
+        return (val || castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
 }
 
 bool LogicExp::and_op(LitExp *b){
     if (const LogicExp *castedb = is_compatible(b)){
-        val = (val && castedb->getVal());
-        return val;
+        return (val && castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
 }
 
 bool LogicExp::equal(LogicArithExpression *b){
     if (const LogicExp *castedb = is_compatible(b)){
-        val = (val == castedb->getVal());
-        return val;
+        return (val == castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
 }

@@ -27,8 +27,7 @@ ArithExp *ArithExp::is_compatible(LogicArithExpression *b){
 
 lli ArithExp::add(LogicArithExpression *b) {
     if (const ArithExp *castedb = is_compatible(b)){
-        val = val + castedb->getVal();
-        return val;
+        return val + castedb->getVal();
     }
     else throw invalid_argument("Invalid argument: different types");
 
@@ -36,8 +35,7 @@ lli ArithExp::add(LogicArithExpression *b) {
 
 lli ArithExp::sub(LogicArithExpression *b) {
     if (const ArithExp *castedb = is_compatible(b)){
-        val = val - castedb->getVal();
-        return val;
+        return val - castedb->getVal();
     }
     else throw invalid_argument("Invalid argument: different types");
 
@@ -45,8 +43,7 @@ lli ArithExp::sub(LogicArithExpression *b) {
 
 lli ArithExp::mul(LogicArithExpression *b){
     if (const ArithExp * castedb = is_compatible(b)){
-        val = val * castedb->getVal();
-        return val;
+        return val * castedb->getVal();
     }
     else throw invalid_argument("Invalid argument: different types");
     }
@@ -56,8 +53,7 @@ lli ArithExp::div(LogicArithExpression *b){
         if (castedb->getVal() == 0) {
             throw invalid_argument("Division by zero");
         }
-        val = val / castedb->getVal();
-        return val;
+        return val / castedb->getVal();
     }
     else throw invalid_argument("Invalid argument: different types");
 }

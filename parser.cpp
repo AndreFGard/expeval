@@ -86,8 +86,8 @@ unique_ptr<LogicArithExpression>Parser::parse_add_exp(){
         if (!tokenizer.startsWith(opStr)) continue;
         Operator op = tokenizer.parseOperator();
         unique_ptr<LogicArithExpression>val2 = (parse_mul_exp());
-        val->apply_operator(op, val2.get());
-        return val;  
+        return make_unique<ArithExp>(get<lli>(val->apply_operator(op, val2.get()))); 
+        //refat return val;  
     }
     return val;
 }
@@ -99,8 +99,8 @@ unique_ptr<LogicArithExpression>Parser::parse_mul_exp(){
         if (!tokenizer.startsWith(opStr)) continue;
         Operator op = tokenizer.parseOperator();
         unique_ptr<LogicArithExpression>val2 = (parse_unary_exp());
-        val->apply_operator(op, val2.get()); 
-        return val;  
+        return make_unique<ArithExp>(get<lli>(val->apply_operator(op, val2.get()))); 
+        //refat return val;  
     }
     return val;
 }
