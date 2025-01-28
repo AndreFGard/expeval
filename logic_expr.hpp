@@ -3,6 +3,7 @@
 #include "litexp.hpp"
 using namespace std;
 
+namespace Expeval {
 class LogicExp: public LitExp<LogicExp, bool> {
     public:
         string toStr() override;
@@ -26,4 +27,6 @@ class LogicExp: public LitExp<LogicExp, bool> {
 inline bool LogicExp::getVal() const {
     return val;
 };
+
+}
 

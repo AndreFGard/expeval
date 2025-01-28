@@ -3,6 +3,7 @@
 #include <stdexcept>
 
 using namespace std;
+using namespace Expeval;
 
 string ArithExp::toStr(){
     return to_string(val);

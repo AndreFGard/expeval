@@ -4,6 +4,7 @@
 #include "litexp.hpp"
 #include <string>
 using namespace std;
+namespace Expeval {
 
 typedef long long int lli;
 class ArithExp: public LitExp<ArithExp, lli> {
@@ -36,4 +37,6 @@ inline lli ArithExp::getVal() const {
 
 inline void ArithExp::invert(){
     val = -val;
+}
+
 }

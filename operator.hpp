@@ -2,6 +2,7 @@
 #include <string>
 #include <unordered_map>
 using namespace std;
+namespace Expeval {
 
 enum class OperatorType {
     Add,
@@ -46,4 +47,6 @@ inline OperatorType Operator::getType() const {
 
 inline int Operator::getSize() const {
      return size; 
+}
+
 }

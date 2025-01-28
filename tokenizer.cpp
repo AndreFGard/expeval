@@ -1,4 +1,6 @@
 #include "tokenizer.hpp"
+using namespace std;
+using namespace Expeval;
 
 Operator Tokenizer::parseOperator(){
     auto temp = Operator(view.substr(0, 2));

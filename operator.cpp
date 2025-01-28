@@ -1,6 +1,7 @@
 #include "operator.hpp"
 #include <stdexcept>
 using namespace std;
+using namespace Expeval;
 
 const unordered_map<string, OperatorType> Operator::stringToOp {
         { "+", OperatorType::Add },

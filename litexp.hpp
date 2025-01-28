@@ -5,6 +5,8 @@
 #include <variant>
 using namespace std;
 
+namespace Expeval {
+
 template <typename opReturnType1, typename opReturnType2>
 class Expression {
     protected:
@@ -12,6 +14,7 @@ class Expression {
     public:
         virtual variant<opReturnType1,opReturnType2> apply_operator(const Operator &op, Expression *b) = 0;
         virtual string toStr() = 0;
+        //virtual ~Expression() = 0;
 };
 
 
@@ -45,3 +48,4 @@ class LitExp: public LogicArithExpression
         LitExp() = default; //prohibiting creation of Litexps, as shown in the documentation
 };
 
+}

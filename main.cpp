@@ -8,11 +8,13 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
+using namespace Expeval;
 
 int main(int argc, char *argv[]){
 
 
     string expstr;
+    //for debugging and reading from files without specifying the ammount of lines
     #ifdef DBG
         ifstream inStream; //auto closed
         inStream.open("in");

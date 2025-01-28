@@ -4,6 +4,8 @@ using namespace std;
 #include <string_view>
 #include "operator.hpp"
 #include <variant>
+
+namespace Expeval {
 typedef long long int lli;
 class Tokenizer{
     public:
@@ -52,5 +54,7 @@ inline void Tokenizer::stripView(){
     while (*(view.rbegin()) == ' '){
         view = view.substr(0, view.size()-1);
     }
+
+}
 
 }

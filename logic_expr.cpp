@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <string>
 using namespace std;
-
+using namespace Expeval;
 
 
 LogicExp::LogicExp(bool expVal): expStr((expVal) ? "true": "false"){

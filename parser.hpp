@@ -9,6 +9,9 @@
 #include <memory>
 #include <stdexcept>
 using namespace std;
+
+namespace Expeval {
+
 using LogicArithExpression = Expression<bool, long long>;
 
 class Parser{
@@ -50,4 +53,6 @@ inline unique_ptr<LogicArithExpression>& Parser::getValExpr(){
 }
 inline void Parser::setValExpr(unique_ptr<LogicArithExpression>& ptr){
     valExpr = move(ptr);
+}
+
 }
