@@ -1,9 +1,9 @@
 #pragma once
-using namespace std;
 #include <string>
 #include <stdexcept>
 #include "litexp.hpp"
 #include <string>
+using namespace std;
 
 typedef long long int lli;
 class ArithExp: public LitExp<ArithExp, lli> {
@@ -11,7 +11,7 @@ class ArithExp: public LitExp<ArithExp, lli> {
         ArithExp(const string &expStr);
         ArithExp(lli expVal);
         ArithExp(char *expStr); // prevent the compiler from casting char * to lli
-        inline lli getVal() const;
+        inline lli getVal() const override;
         inline void invert();
 
         string toStr() override;

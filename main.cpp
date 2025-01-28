@@ -4,6 +4,7 @@
 #include "litexp.hpp"
 #include <functional>
 #include <stdexcept>
+#include <string>
 #include <iostream>
 #include <fstream>
 using namespace std;

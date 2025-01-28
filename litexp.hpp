@@ -14,6 +14,8 @@ class Expression {
         virtual string toStr() = 0;
 };
 
+
+
 using LogicArithExpression = Expression<bool, long long>;
 
 //this seems crtp-like
@@ -35,7 +37,7 @@ class LitExp: public LogicArithExpression
         virtual inline val_type getVal() const = 0;
         //Add, Subtract, Multiply, Divide, And, Or, NotEqual, Equal, LessEqual, GreaterEqual, Less, Greater
 
-        variant<bool,long long> apply_operator(const Operator &op, LogicArithExpression *b) =0;
+        variant<bool,long long> apply_operator(const Operator &op, LogicArithExpression *b) override =0;
 
     protected:
     virtual bool equal(LogicArithExpression *b) =0;

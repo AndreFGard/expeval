@@ -10,7 +10,7 @@ class LogicExp: public LitExp<LogicExp, bool> {
         LogicExp (char *expStr); //prevent the compiler from casting char * to bool
         LogicExp (string expStr);
         variant<bool,long long> apply_operator(const Operator &op, LogicArithExpression *b) override;
-        inline bool getVal() const;
+        inline bool getVal() const override;
     protected:
         LogicExp *is_compatible(LogicArithExpression *b) override;
     private:
