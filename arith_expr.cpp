@@ -1,4 +1,4 @@
-#include "litexp.h"
+#include "litexp.hpp"
 #include "arith_expr.hpp"
 #include <stdexcept>
 
@@ -25,58 +25,88 @@ ArithExp *ArithExp::is_compatible(LogicArithExpression *b){
 }
 
 
-lli ArithExp::add(LitExp *b) {
+lli ArithExp::add(LogicArithExpression *b) {
     if (const ArithExp *castedb = is_compatible(b)){
-        val = val + castedb->getVal();
-        return val;
+        return val + castedb->getVal();
     }
     else throw invalid_argument("Invalid argument: different types");
 
 }
 
-lli ArithExp::sub(LitExp *b) {
+lli ArithExp::sub(LogicArithExpression *b) {
     if (const ArithExp *castedb = is_compatible(b)){
-        val = val - castedb->getVal();
-        return val;
+        return val - castedb->getVal();
     }
     else throw invalid_argument("Invalid argument: different types");
 
 }
 
-lli ArithExp::mul(LitExp *b){
+lli ArithExp::mul(LogicArithExpression *b){
     if (const ArithExp * castedb = is_compatible(b)){
-        val = val * castedb->getVal();
-        return val;
+        return val * castedb->getVal();
     }
     else throw invalid_argument("Invalid argument: different types");
     }
 
-lli ArithExp::div(LitExp *b){
+lli ArithExp::div(LogicArithExpression *b){
     if (const ArithExp *castedb = is_compatible(b)){
-        val = val / castedb->getVal();
-        return val;
+        if (castedb->getVal() == 0) {
+            throw invalid_argument("Division by zero");
+        }
+        return val / castedb->getVal();
     }
     else throw invalid_argument("Invalid argument: different types");
 }
 
-bool ArithExp::equal(LitExp *b){
+bool ArithExp::equal(LogicArithExpression *b){
     if (const ArithExp *castedb = is_compatible(b)){
         return (val == castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
 }
 
-bool ArithExp::less(LitExp *b){
+bool ArithExp::less(LogicArithExpression *b){
     if (const ArithExp *castedb = is_compatible(b)){
         return (val < castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
 }
 
-bool ArithExp::greater(LitExp *b){
+bool ArithExp::greater(LogicArithExpression *b){
     if (const ArithExp *castedb = is_compatible(b)){
         return (val > castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
 }
 
+
+variant<bool,long long> ArithExp::apply_operator(const Operator &op, LogicArithExpression *b) {
+    OperatorType opType = op.getType();
+    if (ArithExp *castedB = is_compatible(b)){
+        switch (opType) {
+            case OperatorType::Add:
+                return add(castedB);
+            case OperatorType::Multiply:
+                return mul(castedB);
+            case OperatorType::Divide:
+                return div(castedB);
+            case OperatorType::Equal:
+                return equal(castedB);
+            case OperatorType::NotEqual:
+                return !equal(castedB);
+            case OperatorType::GreaterEqual:
+                return (equal(castedB) || greater(castedB));
+            case OperatorType::LessEqual:
+                return !greater(castedB);
+            case OperatorType::Greater:
+                return greater(castedB);
+            case OperatorType::Less:
+                return (this->less(castedB));
+            case OperatorType::Subtract:
+                return (sub(castedB));
+            default:
+                throw runtime_error("Unimplemented operator: " + op);
+        }
+    }
+    else throw invalid_argument("Incompatible types");
+}

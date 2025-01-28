@@ -1,77 +1,42 @@
 #include "arith_expr.hpp"
 #include "logic_expr.hpp"
-#include "parser.cpp"
-#include "litexp.h"
+#include "parser.hpp"
+#include "litexp.hpp"
 #include <functional>
 #include <stdexcept>
 #include <iostream>
 #include <fstream>
 using namespace std;
-inline bool assert(bool x){
-    if (!x) throw runtime_error("assertion failed");
-    return true;
-}
 
-inline bool parseAndPrint(string str){
-    try {
-        Parser x(str);
-        cout << x.toStr() << endl;
-    } catch(...) {
-        cout << "error" << endl;
-        return false;
-    }
-    return true;
-}
+int main(int argc, char *argv[]){
 
-int main(){
-    // LogicExp b("false");
-    // LogicExp a("true");
 
-    // assert(a.not_equal(&b));
-    // assert(a.equal(&a));
-    // assert(a.or_op(&b));
-    // assert(a.and_op(&a));
-
-    // try {
-    //     b.add(&b);
-    // }
-    // catch(runtime_error &e){
-    //     assert(true);
-    // }
-    // assert(!b.getVal());
-    // b.or_op(&b);
-    // assert(!b.getVal());
-    // assert(a.getVal());
-    // b.or_op(&a);
-    // assert(b.getVal());
-
-    // ArithExp c("3");
-    // ArithExp d("4");
-    // ArithExp e("7");
-    // assert(c.less(&d));
-    // assert(c.less_equal(&d));
-    // assert(d.greater(&c));
-    // c.add(&d);
-    // assert(c.less_equal(&e));
+    string expstr;
+    #ifdef DBG
+        ifstream inStream; //auto closed
+        inStream.open("in");
+        if (!inStream.is_open()) {
+            cerr << "couldnt open test file in" << endl;
+            cerr << "please dont use -DDBG if you dont have a test file" << endl;
+            return 1;
+        }
+        int noperations = INT32_MAX;
+    #else
+        istream &inStream = cin;
+        int noperations;
+        cin >> noperations;
+        getline(cin, expstr);
+        // remove leftover newline
+    #endif
     
-    
-    //parseAndPrint("true");
-    // parseAndPrint("false || true");
-    // parseAndPrint("false || (true && true)");
-    // parseAndPrint("false || (true && false)");
-    // parseAndPrint("1");
-    // parseAndPrint("1 - 5"); // -4
-    // parseAndPrint("1 - -5");//6
-    // parseAndPrint("1 - - -5");//-4
-    //parseAndPrint("2 + 3 * 2");
-
-    //parseAndPrint("( 2 + 3 * 2 ) - 2");
-
-    ifstream file("in");
-    if (!file.is_open()) throw runtime_error("test file \"in\" not found");
-    string line;
-    while(getline(file, line)){
-        parseAndPrint(line);
+    int ops = 0;
+    while (( ops++ < noperations) && getline(inStream, expstr)){
+        try {
+            Parser x(expstr);
+            cout << x.toStr() << endl;
+        } catch(...) {
+            cout << "error" << endl;
+        }
     }
     
     

@@ -26,9 +26,24 @@ class Operator: public string{
         OperatorType type;
         int size;
         int arity;
+        const static unordered_map<string, OperatorType> stringToOp;
+        const static unordered_map<int, const string> opToString;
     public:
         Operator(string_view op);
-        inline OperatorType getType() {return type;};
+        inline OperatorType getType() const;
         //returns the size of the string of the operator
-        inline int getSize() const { return size; }
-    };
+        inline int getSize() const;
+        static inline const string& OpToString(OperatorType op);
+};
+
+inline const string& Operator::OpToString(OperatorType op) {
+    return opToString.at((int) op);
+}
+
+inline OperatorType Operator::getType() const {
+    return type;
+};
+
+inline int Operator::getSize() const {
+     return size; 
+}

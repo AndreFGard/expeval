@@ -2,7 +2,7 @@
 using namespace std;
 #include <string>
 #include <stdexcept>
-#include "litexp.h"
+#include "litexp.hpp"
 #include <string>
 
 typedef long long int lli;
@@ -15,14 +15,14 @@ class ArithExp: public LitExp<ArithExp, lli> {
         inline void invert();
 
         string toStr() override;
-        
-        lli add(LitExp *b) override;
-        lli sub(LitExp *b) override;
-        lli mul(LitExp *b) override;
-        lli div(LitExp *b) override;
-        bool equal(LitExp *b) override;
-        bool less(LitExp *b) override;
-        bool greater(LitExp *b) override;
+        variant<bool, long long> apply_operator(const Operator &op, Expression *b) override;
+        lli add(LogicArithExpression *b);
+        lli sub(LogicArithExpression *b);
+        lli mul(LogicArithExpression *b);
+        lli div(LogicArithExpression *b);
+        bool equal(LogicArithExpression *b) override;
+        bool less(LogicArithExpression *b);
+        bool greater(LogicArithExpression *b);
 
     protected:
         ArithExp *is_compatible(LogicArithExpression *b) override;

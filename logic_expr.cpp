@@ -17,31 +17,27 @@ LogicExp::LogicExp(string expStr): expStr(expStr){
 }
 
 
-//todo make dynamic cast
 LogicExp *LogicExp::is_compatible(LogicArithExpression *b){
     return dynamic_cast<LogicExp *>(b);
 }
 
 bool LogicExp::or_op (LitExp *b) {
     if (const LogicExp *castedb = is_compatible(b)){
-        val = (val || castedb->getVal());
-        return val;
+        return (val || castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
 }
 
 bool LogicExp::and_op(LitExp *b){
     if (const LogicExp *castedb = is_compatible(b)){
-        val = (val && castedb->getVal());
-        return val;
+        return (val && castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
 }
 
-bool LogicExp::equal(LitExp *b){
+bool LogicExp::equal(LogicArithExpression *b){
     if (const LogicExp *castedb = is_compatible(b)){
-        val = (val == castedb->getVal());
-        return val;
+        return (val == castedb->getVal());
     }
     else throw invalid_argument("Invalid argument: different types");
 }
@@ -49,4 +45,22 @@ bool LogicExp::equal(LitExp *b){
 
 string LogicExp::toStr() {
     return (val) ? "true" : "false";
+}
+
+variant<bool,long long> LogicExp::apply_operator(const Operator &op, LogicArithExpression *b){
+    if (LogicExp *castedB = is_compatible(b)){
+        switch (op.getType()){
+            case OperatorType::Or:
+                return or_op(castedB);
+            case OperatorType::And:
+                return and_op(castedB);
+            case OperatorType::Equal:
+                return equal(castedB);
+            case OperatorType::NotEqual:
+                return !equal(castedB);
+            default:
+                throw invalid_argument("Invalid operator: " + op);
+        }
+    }
+    else throw invalid_argument("Invalid argument: different types");
 }
