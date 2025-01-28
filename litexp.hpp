@@ -34,12 +34,11 @@ class LitExp: public LogicArithExpression
 
         virtual inline val_type getVal() const = 0;
         //Add, Subtract, Multiply, Divide, And, Or, NotEqual, Equal, LessEqual, GreaterEqual, Less, Greater
-        
-        virtual bool equal(LogicArithExpression *b) =0;
 
         variant<bool,long long> apply_operator(const Operator &op, LogicArithExpression *b) =0;
 
     protected:
+    virtual bool equal(LogicArithExpression *b) =0;
         virtual Derive* is_compatible(LogicArithExpression *b) = 0;
         LitExp() = default; //prohibiting creation of Litexps, as shown in the documentation
 };

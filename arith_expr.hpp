@@ -16,6 +16,9 @@ class ArithExp: public LitExp<ArithExp, lli> {
 
         string toStr() override;
         variant<bool, long long> apply_operator(const Operator &op, Expression *b) override;
+    protected:
+        ArithExp *is_compatible(LogicArithExpression *b) override;
+    private:
         lli add(LogicArithExpression *b);
         lli sub(LogicArithExpression *b);
         lli mul(LogicArithExpression *b);
@@ -23,10 +26,6 @@ class ArithExp: public LitExp<ArithExp, lli> {
         bool equal(LogicArithExpression *b) override;
         bool less(LogicArithExpression *b);
         bool greater(LogicArithExpression *b);
-
-    protected:
-        ArithExp *is_compatible(LogicArithExpression *b) override;
-    private:
         lli val;
         const string expStr;
 };
