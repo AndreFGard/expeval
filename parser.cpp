@@ -126,7 +126,7 @@ unique_ptr<LogicArithExpression>Parser::parse_primary_exp(){
     if (tokenizer.startsWith("(")){
         string subexpStr = tokenizer.getSubExpressionString();
         unique_ptr<Parser> subparser = make_unique<Parser>(subexpStr);
-        unique_ptr<LogicArithExpression>subexpResult = move(subparser->valExpr);
+        unique_ptr<LogicArithExpression>subexpResult = move(subparser->getValExpr());
         return subexpResult;
     }
     unique_ptr<LogicArithExpression>val = parse_lit();

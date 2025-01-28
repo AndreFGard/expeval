@@ -14,15 +14,17 @@ using LogicArithExpression = Expression<bool, long long>;
 class Parser{
     public:
         Parser(string &originalExpStr);
-        unique_ptr<LogicArithExpression>valExpr;
+        
 
         string toStr();
-
+        inline unique_ptr<LogicArithExpression>& getValExpr();
+        inline void setValExpr(unique_ptr<LogicArithExpression>& ptr);
     private:
         int currentToken = 0;
 
         Tokenizer tokenizer;
         
+        unique_ptr<LogicArithExpression>valExpr;
         unique_ptr<LogicArithExpression>parse_or_exp();
 
         unique_ptr<LogicArithExpression>parse_and_exp();
@@ -43,4 +45,9 @@ class Parser{
 
 };
 
-
+inline unique_ptr<LogicArithExpression>& Parser::getValExpr(){
+    return valExpr;
+}
+inline void Parser::setValExpr(unique_ptr<LogicArithExpression>& ptr){
+    valExpr = move(ptr);
+}
