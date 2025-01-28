@@ -1,9 +1,9 @@
 #pragma once
-using namespace std;
 #include <string>
 #include "operator.hpp"
 #include <stdexcept>
 #include <variant>
+using namespace std;
 
 template <typename opReturnType1, typename opReturnType2>
 class Expression {

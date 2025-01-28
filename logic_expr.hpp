@@ -1,7 +1,7 @@
 #pragma once
-using namespace std;
 #include <string>
 #include "litexp.hpp"
+using namespace std;
 
 class LogicExp: public LitExp<LogicExp, bool> {
     public:

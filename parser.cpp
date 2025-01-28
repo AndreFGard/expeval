@@ -1,7 +1,7 @@
-using namespace std;
+
 #include "parser.hpp"
 #include <stdexcept>
-
+using namespace std;
 Parser::Parser(string &originalExpStr): tokenizer(originalExpStr){
     tokenizer = Tokenizer(originalExpStr);
     unique_ptr<LogicArithExpression>parse_val(parse_or_exp()); 
