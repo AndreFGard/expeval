@@ -24,4 +24,4 @@ Com uma certa inspiração no CRTP, a classe abstrata LitExp (expressão literal
 Usado apenas para fazer overload do operator <<.
 
 
-
+GPL-3
