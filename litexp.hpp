@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 #include "operator.hpp"
 #include <stdexcept>
 #include <variant>
@@ -15,9 +16,16 @@ class Expression {
         virtual variant<opReturnType1,opReturnType2> apply_operator(const Operator &op, Expression *b) = 0;
         virtual string toStr() = 0;
         //virtual ~Expression() = 0;
+        template <typename T1, typename T2>
+        friend ostream& operator<<(ostream& os, Expression<T1, T2>& expr);
 };
 
-
+//its required to declare templated functions in the header
+template <typename T1, typename T2>
+ostream& operator<<(ostream& os, Expression<T1, T2>& expr){
+    os << expr.toStr();
+    return os;
+}
 
 using LogicArithExpression = Expression<bool, long long>;
 

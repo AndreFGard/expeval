@@ -36,7 +36,7 @@ int main(int argc, char *argv[]){
     while (( ops++ < noperations) && getline(inStream, expstr)){
         try {
             Parser x(expstr);
-            cout << x.toStr() << endl;
+            cout << *(x.getValExpr().get()) << endl;
         } catch(...) {
             cout << "error" << endl;
         }
